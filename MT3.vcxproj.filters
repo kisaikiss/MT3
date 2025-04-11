@@ -41,11 +41,17 @@
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp">
       <Filter>KamataEngine\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Vector3Class.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="Vector3Calculations.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3Class.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixCalculations.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Define.cpp">
+      <Filter>KamataEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,11 +125,15 @@
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h">
       <Filter>KamataEngine\Include</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Vector3Class.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3Calculations.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="Vector3Class.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixCalculations.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h" />
   </ItemGroup>
 </Project>
