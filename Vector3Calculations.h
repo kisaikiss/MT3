@@ -13,6 +13,14 @@
 float Dot(Vector3 v1, Vector3 v2);
 
 /// <summary>
+/// ベクトルの外積
+/// </summary>
+/// <param name="v1"></param>
+/// <param name="v2"></param>
+/// <returns></returns>
+Vector3 Cross(Vector3& v1, Vector3& v2);
+
+/// <summary>
 /// ベクトルの長さ
 /// </summary>
 /// <param name="vector3"></param>
