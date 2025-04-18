@@ -83,9 +83,9 @@ Matrix4x4 MakeRotateZMatrix(float theta) {
 	return result;
 }
 
-Matrix4x4 MakeRotateXYZMatrix(const Vector3& theta) {
+Matrix4x4 MakeRotateMatrix(const Vector3& rotate) {
 	Matrix4x4 result{};
-	result = Multiply(MakeRotateXMatrix(theta.x), Multiply(MakeRotateYMatrix(theta.y), MakeRotateZMatrix(theta.z)));
+	result = Multiply(MakeRotateXMatrix(rotate.x), Multiply(MakeRotateYMatrix(rotate.y), MakeRotateZMatrix(rotate.z)));
 	return result;
 }
 
@@ -98,6 +98,13 @@ Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
 	result.m[3][0] = translate.x;
 	result.m[3][1] = translate.y;
 	result.m[3][2] = translate.z;
+	return result;
+}
+
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
+	Matrix4x4 result{};
+	result = Multiply(MakeScaleMatrix(scale), MakeRotateMatrix(rotate));
+	result = Multiply(result, MakeTranslateMatrix(translate));
 	return result;
 }
 

@@ -62,7 +62,7 @@ Matrix4x4 MakeRotateZMatrix(float theta);
 /// </summary>
 /// <param name="theta"></param>
 /// <returns></returns>
-Matrix4x4 MakeRotateXYZMatrix(const Vector3& theta);
+Matrix4x4 MakeRotateMatrix(const Vector3& rotate);
 
 /// <summary>
 /// 移動行列を作る
@@ -70,6 +70,15 @@ Matrix4x4 MakeRotateXYZMatrix(const Vector3& theta);
 /// <param name="translate"></param>
 /// <returns></returns>
 Matrix4x4 MakeTranslateMatrix(const Vector3& translate);
+
+/// <summary>
+/// 3次元アフィン変換行列を生成する
+/// </summary>
+/// <param name="scale">拡大縮小率</param>
+/// <param name="rotate">回転</param>
+/// <param name="translate">移動</param>
+/// <returns></returns>
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 
 /// <summary>
 /// 座標変換
