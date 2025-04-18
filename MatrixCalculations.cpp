@@ -50,6 +50,45 @@ Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
 	return result;
 }
 
+Matrix4x4 MakeRotateXMatrix(float theta) {
+	Matrix4x4 result{};
+	result.m[0][0] = 1.0f;
+	result.m[1][1] = std::cos(theta);
+	result.m[1][2] = std::sin(theta);
+	result.m[2][1] = -std::sin(theta);
+	result.m[2][2] = std::cos(theta);
+	result.m[3][3] = 1.0f;
+	return result;
+}
+
+Matrix4x4 MakeRotateYMatrix(float theta) {
+	Matrix4x4 result{};
+	result.m[0][0] = std::cos(theta);
+	result.m[1][1] = 1.0f;
+	result.m[2][0] = std::sin(theta);
+	result.m[0][2] = -std::sin(theta);
+	result.m[2][2] = std::cos(theta);
+	result.m[3][3] = 1.0f;
+	return result;
+}
+
+Matrix4x4 MakeRotateZMatrix(float theta) {
+	Matrix4x4 result{};
+	result.m[0][0] = std::cos(theta);
+	result.m[0][1] = std::sin(theta);
+	result.m[1][0] = -std::sin(theta);
+	result.m[1][1] = std::cos(theta);
+	result.m[2][2] = 1.0f;
+	result.m[3][3] = 1.0f;
+	return result;
+}
+
+Matrix4x4 MakeRotateXYZMatrix(const Vector3& theta) {
+	Matrix4x4 result{};
+	result = Multiply(MakeRotateXMatrix(theta.x), Multiply(MakeRotateYMatrix(theta.y), MakeRotateZMatrix(theta.z)));
+	return result;
+}
+
 Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
 	Matrix4x4 result{};
 	result.m[0][0] = 1.0f;

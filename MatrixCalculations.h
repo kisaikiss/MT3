@@ -1,7 +1,7 @@
 #pragma once
 #include "Matrix4x4.h"
 #include "Vector3Class.h"
-#include <math.h>
+#include <cmath>
 #include <cassert>
 
 /// <summary>
@@ -34,6 +34,35 @@ Matrix4x4 Multiply(Matrix4x4 const& matrix1, Matrix4x4 const& matrix2);
 /// <param name="scale"></param>
 /// <returns></returns>
 Matrix4x4 MakeScaleMatrix(const Vector3& scale);
+
+/// <summary>
+/// X軸方向の回転行列を作る
+/// </summary>
+/// <param name="theta"></param>
+/// <returns></returns>
+Matrix4x4 MakeRotateXMatrix(float theta);
+
+/// <summary>
+/// Y軸方向の回転行列を作る
+/// </summary>
+/// <param name="theta"></param>
+/// <returns></returns>
+Matrix4x4 MakeRotateYMatrix(float theta);
+
+/// <summary>
+/// Z軸方向の回転行列を作る
+/// </summary>
+/// <param name="theta"></param>
+/// <returns></returns>
+Matrix4x4 MakeRotateZMatrix(float theta);
+
+
+/// <summary>
+/// X,Y,Z全て回転する回転行列を作る
+/// </summary>
+/// <param name="theta"></param>
+/// <returns></returns>
+Matrix4x4 MakeRotateXYZMatrix(const Vector3& theta);
 
 /// <summary>
 /// 移動行列を作る
