@@ -108,6 +108,39 @@ Matrix4x4 Transpose(Matrix4x4 matrix);
 /// <returns></returns>
 Matrix4x4 MakeIdentity4x4();
 
+
+/// <summary>
+/// 正射影行列
+/// </summary>
+/// <param name="left"></param>
+/// <param name="top"></param>
+/// <param name="right"></param>
+/// <param name="bottom"></param>
+/// <returns></returns>
+Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float zNear, float zFar);
+
+/// <summary>
+/// 透視投影行列
+/// </summary>
+/// <param name="fovY"></param>
+/// <param name="aspectRatio"></param>
+/// <param name="nearClip"></param>
+/// <param name="farClip"></param>
+/// <returns></returns>
+Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip);
+
+/// <summary>
+/// ビューポート変換
+/// </summary>
+/// <param name="left"></param>
+/// <param name="top"></param>
+/// <param name="width"></param>
+/// <param name="height"></param>
+/// <param name="minDepth"></param>
+/// <param name="maxDepth"></param>
+/// <returns></returns>
+Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth);
+
 /// <summary>
 /// 行列の数値表示
 /// </summary>

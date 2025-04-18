@@ -192,6 +192,43 @@ Matrix4x4 MakeIdentity4x4() {
 	return result;
 }
 
+
+Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float zNear, float zFar) {
+	Matrix4x4 result{};
+	result.m[0][0] = 2.f / (right - left);
+	result.m[1][1] = 2.f / (top - bottom);
+	result.m[2][2] = 1.f / (zFar - zNear);
+	result.m[3][0] = (left + right) / (left - right);
+	result.m[3][1] = (top + bottom) / (bottom - top);
+	result.m[3][2] = zNear / (zNear - zFar);
+	result.m[3][3] = 1.f;
+
+	return result;
+}
+
+Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip) {
+	Matrix4x4 result{};
+	result.m[0][0] = (1.f / aspectRatio) * (1.f / tanf(fovY / 2.f));
+	result.m[1][1] = 1.f / tanf(fovY / 2.f);
+	result.m[2][2] = farClip / (farClip - nearClip);
+	result.m[3][2] = (-nearClip * farClip) / (farClip - nearClip);
+	result.m[2][3] = 1.f;
+	return result;
+}
+
+Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth) {
+	Matrix4x4 result{};
+	result.m[0][0] = width / 2.f;
+	result.m[1][1] = -1 * (height / 2.f);
+	result.m[2][2] = maxDepth - minDepth;
+	result.m[3][0] = left + result.m[0][0];
+	result.m[3][1] = top + (height / 2.f);
+	result.m[3][2] = minDepth;
+	result.m[3][3] = 1.f;
+	return result;
+}
+
+
 void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label) {
 	Novice::ScreenPrintf(x, y, label);
 	y += Define::kRowHeight;
