@@ -3,8 +3,12 @@
 #include "Vector3Calculations.h"
 #include "Matrix4x4.h"
 #include "MatrixCalculations.h"
+#include "Triangle.h"
+#include "Camera.h"
 
 #include "Define.h"
+
+#include <memory>
 
 const char kWindowTitle[] = "LE2A_04_コバヤシ_マサト_タイトル";
 
@@ -20,9 +24,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = {0};
 	char preKeys[256] = {0};
 
-	Matrix4x4 orthographicMatrix = MakeOrthographicMatrix(-160.f, 160.f, 200.f, 300.f, 0.0f, 1000.f);
-	Matrix4x4 perspectiveFovMatrix = MakePerspectiveFovMatrix(0.63f, 1.33f, 0.1f, 1000.f);
-	Matrix4x4 viewportMatrix = MakeViewportMatrix(100.0f, 200.0f, 600.0f, 300.0f, 0.0f, 1.0f);
+	std::shared_ptr<Camera> camera;
+	camera = std::make_shared<Camera>();
+
+	std::shared_ptr<Triangle> triangle;
+	triangle = std::make_shared<Triangle>();
+
+	Vector3 triangleTranslate{};
+	Vector3 triangleRotate{};
+	const float kTriangleSpeed = 0.02f;
+
+	Vector3 v1{ 1.2f,-3.9f,2.5f };
+	Vector3 v2{ 2.8f,0.4f,-1.3f };
+	Vector3 cross = Cross(v1, v2);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -36,7 +50,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-
+		triangle->Update();
+		
+		if (keys[DIK_W]) {
+			triangleTranslate.z += kTriangleSpeed;
+		}
+		if (keys[DIK_S]) {
+			triangleTranslate.z -= kTriangleSpeed;
+		}
+		if (keys[DIK_A]) {
+			triangleTranslate.x -= kTriangleSpeed;
+		}
+		if (keys[DIK_D]) {
+			triangleTranslate.x += kTriangleSpeed;
+		}
+		triangleRotate.y += 0.1f;
+		triangle->SetRotate(triangleRotate);
+		triangle->SetTranslate(triangleTranslate);
 		///
 		/// ↑更新処理ここまで
 		///
@@ -44,10 +74,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-		MatrixScreenPrintf(0, 0, orthographicMatrix, "orthographicMatrix");
-		MatrixScreenPrintf(0, Define::kRowHeight * 5, perspectiveFovMatrix, "perspectiveFovMatrix");
-		MatrixScreenPrintf(0, Define::kRowHeight * 10, viewportMatrix, "viewportMatrix");
-
+		triangle->Draw(camera->GetVeiwProjectionMatrix(),camera->GetVeiwportMatrix());
+		VectorScreenPrintf(0, 0, cross, "Cross");
 		///
 		/// ↑描画処理ここまで
 		///

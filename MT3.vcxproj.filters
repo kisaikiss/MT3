@@ -17,6 +17,12 @@
     <Filter Include="Math">
       <UniqueIdentifier>{17d3eb00-cf52-499d-9306-00d0c74afe88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Triangle">
+      <UniqueIdentifier>{3dbd1ecb-524d-4ae9-8dec-29a11232ecd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{182a0adf-40d7-4fd8-91cd-cf8203968345}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -52,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="Define.cpp">
       <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,5 +147,11 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Define.h" />
+    <ClInclude Include="Triangle.h">
+      <Filter>Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
