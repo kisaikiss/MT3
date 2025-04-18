@@ -7,8 +7,8 @@
 #endif // _DEBUG
 
 Camera::Camera() {
-	pos_ = { 0.f, 0.f, -7.f };
-	rotate_ = { 0.f,0.f,0.f };
+	pos_ = { 0.0f, 1.9f, -6.49f };
+	rotate_ = { 0.26f,0.f,0.f };
 	scale_ = { 1.f,1.f,1.f };
 	worldMatrix_ = MakeAffineMatrix(scale_, rotate_, pos_);
 	Matrix4x4 viewMatrix = Inverse(worldMatrix_);

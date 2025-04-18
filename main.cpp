@@ -5,6 +5,8 @@
 #include "MatrixCalculations.h"
 #include "Triangle.h"
 #include "Camera.h"
+#include "Sphere.h"
+#include "DrawGrid.h"
 
 #include "Define.h"
 
@@ -27,16 +29,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	std::shared_ptr<Triangle> triangle;
-	triangle = std::make_shared<Triangle>();
-
-	Vector3 triangleTranslate{};
-	Vector3 triangleRotate{};
-	const float kTriangleSpeed = 0.02f;
-
-	Vector3 v1{ 1.2f,-3.9f,2.5f };
-	Vector3 v2{ 2.8f,0.4f,-1.3f };
-	Vector3 cross = Cross(v1, v2);
+	std::shared_ptr<Sphere> sphere;
+	sphere = std::make_shared<Sphere>();
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -50,23 +44,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-		triangle->Update();
-		
-		if (keys[DIK_W]) {
-			triangleTranslate.z += kTriangleSpeed;
-		}
-		if (keys[DIK_S]) {
-			triangleTranslate.z -= kTriangleSpeed;
-		}
-		if (keys[DIK_A]) {
-			triangleTranslate.x -= kTriangleSpeed;
-		}
-		if (keys[DIK_D]) {
-			triangleTranslate.x += kTriangleSpeed;
-		}
-		triangleRotate.y += 0.1f;
-		triangle->SetRotate(triangleRotate);
-		triangle->SetTranslate(triangleTranslate);
+		sphere->Update();
+		camera->Update();
 		///
 		/// ↑更新処理ここまで
 		///
@@ -74,8 +53,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-		triangle->Draw(camera->GetVeiwProjectionMatrix(),camera->GetVeiwportMatrix());
-		VectorScreenPrintf(0, 0, cross, "Cross");
+		
+		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+
 		///
 		/// ↑描画処理ここまで
 		///
