@@ -37,17 +37,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	/*std::shared_ptr<Sphere> sphere;
-	sphere = std::make_shared<Sphere>();*/
+	std::shared_ptr<Sphere> sphere;
+	sphere = std::make_shared<Sphere>();
+	sphere->SetRadius(0.5f);
 
-	std::shared_ptr<Point> point;
-	point = std::make_shared<Point>();
-	point->SetPos({ -1.5f, 0.6f, 0.6f });
-
-	std::shared_ptr<Shape> segment;
-	segment = std::make_shared<Segment>();
-	segment->SetOrigin({ -2.0f, -1.0f, 0.0f });
-	segment->SetDiff({ 3.0f, 2.0f, 2.0f });
+	std::shared_ptr<Sphere> sphere2;
+	sphere2 = std::make_shared<Sphere>();
+	sphere2->SetPos({ 1.f, 0.f, 0.f });
+	
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -61,16 +58,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-		Vector3 project = Project(point->GetPos() - segment->GetOrigin(), segment->GetDiff());
 		
-		
-		//sphere->Update();
+		sphere->Update();
+		sphere2->Update();
 		camera->Update(keys);
-		segment->Update();
-		point->Update();
-		ImGui::Begin("project");
-		ImGui::InputFloat3("Project", &project.x, "%.3f",ImGuiInputTextFlags_ReadOnly);
-		ImGui::End();
+		
+		if (CheckCollisionSpheres(*sphere, *sphere2)) {
+			sphere->OnCollision();
+		}
 
 		///
 		/// ↑更新処理ここまで
@@ -81,10 +76,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		//sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		segment->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		point->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		segment->DrawClosestPoint(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), *point);
+		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		sphere2->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		
 		///
 		/// ↑描画処理ここまで
 		///

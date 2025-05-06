@@ -16,6 +16,7 @@ public:
 	void OnCollision();
 
 	void SetPos(const Vector3& position);
+	void SetRadius(float radius) { radius_ = radius; }
 
 	Vector3 GetPos() const { return centerPos_; }
 	float GetRadius() const { return radius_; }

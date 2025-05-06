@@ -28,3 +28,11 @@ Vector3 ClosestPoint(const Point& point, const Shape& shape) {
 
 	return result;
 }
+
+bool CheckCollisionSpheres(const Sphere& sphere1, const Sphere& sphere2) {
+	float distance = Length(sphere1.GetPos() - sphere2.GetPos());
+	if (distance <= sphere1.GetRadius() + sphere2.GetRadius()) {
+		return true;
+	}
+	return false;
+}

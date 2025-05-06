@@ -15,7 +15,7 @@ int32_t Sphere::sphereNum = 1;
 Sphere::Sphere() {
 	centerPos_ = { 0.f,0.f,0.f };
 	radius_ = 0.2f;
-	color_ = BLACK;
+	color_ = WHITE;
 	myNumber_ = sphereNum;
 	sphereNum++;
 }
@@ -35,7 +35,7 @@ void Sphere::Update() {
 	ImGui::DragFloat("radius", &radius_, 0.01f);
 	ImGui::End();
 #endif // _DEBUG
-	color_ = BLACK;
+	color_ = WHITE;
 }
 
 void Sphere::Draw(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix) {
