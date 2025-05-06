@@ -18,7 +18,7 @@ float Length(Vector3 vector3) {
 	return sqrtf(powf(vector3.x, 2.0f) + powf(vector3.y, 2.0f) + powf(vector3.z, 2.0f));
 }
 
-Vector3 Normalize(Vector3& vector3) {
+Vector3 Normalize(const Vector3& vector3) {
 	float length = Length(vector3);
 	assert(length != 0);
 	return Vector3(vector3.x / length, vector3.y / length, vector3.z / length);
@@ -30,4 +30,25 @@ void VectorScreenPrintf(int x, int y, const Vector3& vector, const char* label) 
 	Novice::ScreenPrintf(x + Define::kColumnWidth, y, "%.02f", vector.y);
 	Novice::ScreenPrintf(x + Define::kColumnWidth * 2, y, "%.02f", vector.z);
 	Novice::ScreenPrintf(x + Define::kColumnWidth * 3, y, "%s", label);
+}
+
+Vector3 Project(const Vector3& v1, const Vector3& v2) {
+	Vector3 result{};
+	float length = Length(v2);
+	assert(length != 0);
+	result.x = (Dot(v1, v2) / length) * (v2.x / length);
+	result.y = (Dot(v1, v2) / length) * (v2.y / length);
+	result.z = (Dot(v1, v2) / length) * (v2.z / length);
+	return result;
+}
+
+
+Vector3 TransforNormal(const Vector3& vector, const Matrix4x4& matrix) {
+	Vector3 result{
+		vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0],
+		vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + vector.z * matrix.m[2][1],
+		vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2]
+	};
+
+	return result;
 }

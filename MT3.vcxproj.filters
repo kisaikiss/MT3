@@ -23,6 +23,15 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{182a0adf-40d7-4fd8-91cd-cf8203968345}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Line">
+      <UniqueIdentifier>{03599905-e68a-4490-85ea-bbb06bdb3155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sphere">
+      <UniqueIdentifier>{73d4f5b6-e52c-4712-9f94-2c14b9dbfa81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{b3892736-2d00-44fe-963e-72c6f614f64d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -64,6 +73,21 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawGrid.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Line</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,5 +177,20 @@
     <ClInclude Include="Camera.h">
       <Filter>Camera</Filter>
     </ClInclude>
+    <ClInclude Include="DrawGrid.h" />
+    <ClInclude Include="Shape.h">
+      <Filter>Line</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="Collision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MT3.rc" />
   </ItemGroup>
 </Project>
