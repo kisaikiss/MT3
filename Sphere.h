@@ -19,10 +19,10 @@ public:
 
 	Vector3 GetPos() const { return centerPos_; }
 	float GetRadius() const { return radius_; }
-private:
+protected:
 	Vector3 centerPos_;
-	float radius_;
 	uint32_t color_;
 	int32_t myNumber_;
+	float radius_;	
 };
 
