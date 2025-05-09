@@ -38,9 +38,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	std::shared_ptr<Sphere> sphere;
-	sphere = std::make_shared<Sphere>();
-	sphere->SetRadius(0.5f);
+	std::shared_ptr<Shape> shape;
+	shape = std::make_shared<Segment>();
 
 	std::shared_ptr<Plane> plane;
 	plane = std::make_shared<Plane>();
@@ -59,12 +58,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
-		sphere->Update();
+		shape->Update();
 		plane ->Update();
 		camera->Update(keys);
 		
-		if (CheckCollisionPlaneSphere(*sphere, *plane)) {
-			sphere->OnCollision();
+		if (CheckCollisionPlaneShape(*shape, *plane)) {
+			shape->OnCollision();
 		}
 
 		///
@@ -76,7 +75,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		shape->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		plane->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		
 		///

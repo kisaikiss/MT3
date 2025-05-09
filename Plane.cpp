@@ -54,16 +54,16 @@ void Plane::Draw(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewpor
 	}
 	
 	Novice::DrawLine(static_cast<int>(points[0].x), static_cast<int>(points[0].y),
-		static_cast<int>(points[2].x), static_cast<int>(points[2].y), BLUE);
+		static_cast<int>(points[2].x), static_cast<int>(points[2].y), WHITE);
 
 	Novice::DrawLine(static_cast<int>(points[1].x), static_cast<int>(points[1].y),
-		static_cast<int>(points[2].x), static_cast<int>(points[2].y), BLUE);
+		static_cast<int>(points[2].x), static_cast<int>(points[2].y), WHITE);
 
 	Novice::DrawLine(static_cast<int>(points[1].x), static_cast<int>(points[1].y),
-		static_cast<int>(points[3].x), static_cast<int>(points[3].y), BLUE);
+		static_cast<int>(points[3].x), static_cast<int>(points[3].y), WHITE);
 
 	Novice::DrawLine(static_cast<int>(points[3].x), static_cast<int>(points[3].y),
-		static_cast<int>(points[0].x), static_cast<int>(points[0].y), BLUE);
+		static_cast<int>(points[0].x), static_cast<int>(points[0].y), WHITE);
 #pragma endregion
 
 #pragma region 法線を表す線分の描画
@@ -79,7 +79,7 @@ void Plane::Draw(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewpor
 	Vector3 screenSegmentOrigin2diff = Transform(ndcSegmentOrigin2diff, viewportMatrix);
 
 	Novice::DrawLine(static_cast<int>(screenSegmentOrigin.x), static_cast<int>(screenSegmentOrigin.y),
-		static_cast<int>(screenSegmentOrigin2diff.x), static_cast<int>(screenSegmentOrigin2diff.y), RED);
+		static_cast<int>(screenSegmentOrigin2diff.x), static_cast<int>(screenSegmentOrigin2diff.y), BLUE);
 
 
 	//NDCまで変換。Transformを使うと同次座標系->デカルト座標系の処理が行われ、結果的にZDivideが行われることとなる
