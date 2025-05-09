@@ -36,3 +36,16 @@ bool CheckCollisionSpheres(const Sphere& sphere1, const Sphere& sphere2) {
 	}
 	return false;
 }
+
+float CalculateDistancePointPlane(const Vector3& point, const Plane& plane) {
+	float result = Dot(plane.GetNormal(), point) - plane.GetDistance();
+	return result;
+}
+
+bool CheckCollisionPlaneSphere(const Sphere& sphere, const Plane& plane) {
+	float distance = fabsf(CalculateDistancePointPlane(sphere.GetPos(), plane));
+	if (distance <= sphere.GetRadius()) {
+		return true;
+	}
+	return false;
+}

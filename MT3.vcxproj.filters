@@ -32,6 +32,12 @@
     <Filter Include="Collision">
       <UniqueIdentifier>{b3892736-2d00-44fe-963e-72c6f614f64d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plane">
+      <UniqueIdentifier>{5453e5e2-e9dc-432c-abdf-0391214fbdb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Point">
+      <UniqueIdentifier>{35d98f8f-f830-4618-9e0d-f98e0d7b3027}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -83,11 +89,14 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>Sphere</Filter>
     </ClCompile>
-    <ClCompile Include="Point.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Point</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,11 +193,16 @@
     <ClInclude Include="Sphere.h">
       <Filter>Sphere</Filter>
     </ClInclude>
-    <ClInclude Include="Point.h" />
     <ClInclude Include="Collision.h">
       <Filter>Collision</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Plane.h">
+      <Filter>Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Point</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MT3.rc" />
