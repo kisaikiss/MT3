@@ -19,7 +19,7 @@ float Dot(Vector3 v1, Vector3 v2);
 /// <param name="v1"></param>
 /// <param name="v2"></param>
 /// <returns></returns>
-Vector3 Cross(Vector3& v1, Vector3& v2);
+Vector3 Cross(const Vector3& v1, const Vector3& v2);
 
 /// <summary>
 /// ベクトルの長さ
@@ -54,3 +54,5 @@ void VectorScreenPrintf(int x, int y, const Vector3& vector, const char* label);
 Vector3 Project(const Vector3& v1, const Vector3& v2);
 
 Vector3 TransforNormal(const Vector3& vector, const Matrix4x4& matrix);
+
+Vector3 Perpendicular(const Vector3& vector);

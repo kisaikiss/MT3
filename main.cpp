@@ -9,6 +9,7 @@
 #include "DrawGrid.h"
 #include "Shape.h"
 #include "Point.h"
+#include "Plane.h"
 
 #include "Define.h"
 
@@ -41,9 +42,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	sphere = std::make_shared<Sphere>();
 	sphere->SetRadius(0.5f);
 
-	std::shared_ptr<Sphere> sphere2;
-	sphere2 = std::make_shared<Sphere>();
-	sphere2->SetPos({ 1.f, 0.f, 0.f });
+	std::shared_ptr<Plane> plane;
+	plane = std::make_shared<Plane>();
 	
 
 	// ウィンドウの×ボタンが押されるまでループ
@@ -60,10 +60,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		sphere->Update();
-		sphere2->Update();
+		plane ->Update();
 		camera->Update(keys);
 		
-		if (CheckCollisionSpheres(*sphere, *sphere2)) {
+		if (CheckCollisionPlaneSphere(*sphere, *plane)) {
 			sphere->OnCollision();
 		}
 
@@ -77,7 +77,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		sphere2->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		plane->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		
 		///
 		/// ↑描画処理ここまで
