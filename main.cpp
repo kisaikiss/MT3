@@ -10,6 +10,7 @@
 #include "Shape.h"
 #include "Point.h"
 #include "Plane.h"
+#include "Box.h"
 
 #include "Define.h"
 
@@ -38,11 +39,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	std::shared_ptr<Shape> shape;
-	shape = std::make_shared<Segment>();
+	AABB aabb1 = {
+		-0.5f, -0.5f, -0.5f,
+		0.0f, 0.0f, 0.0f };
+	
 
-	std::shared_ptr<Triangle> triangle;
-	triangle = std::make_shared<Triangle>();
+	std::shared_ptr<Box> box;
+	box = std::make_shared<Box>();
+	box->SetWorldAABB(aabb1); // AABBの最小点と最大点を指定して初期化
+
+	aabb1 = {
+		0.2f, 0.2f, 0.2f,
+		1.0f, 1.0f, 1.0f
+	};
+
+	std::shared_ptr<Box> box2;
+	box2 = std::make_shared<Box>();
+	box2->SetWorldAABB(aabb1); // AABBの最小点と最大点を指定して初期化
 	
 
 	// ウィンドウの×ボタンが押されるまでループ
@@ -58,14 +71,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
-		shape->Update();
-		triangle->Update();
+		box2->Update();
+		box->Update();
 		camera->Update(keys);
 		
-		if (CheckCollisionTriangleShape(*shape, *triangle)) {
-			shape->OnCollision();
-		} 
-
+		if (CheckCollisionAABB(box->GetWorldAABB(), box2->GetWorldAABB())) {
+			box->OnCollision();
+		}
+	
 		///
 		/// ↑更新処理ここまで
 		///
@@ -75,8 +88,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		shape->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		triangle->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		box2->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		box->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		
 		///
 		/// ↑描画処理ここまで
