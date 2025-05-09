@@ -35,3 +35,11 @@ float CalculateDistancePointPlane(const Vector3& point, const Plane& plane);
 /// <param name="plane"></param>
 /// <returns></returns>
 bool CheckCollisionPlaneSphere(const Sphere& sphere, const Plane& plane);
+
+/// <summary>
+/// 線と平面の当たり判定
+/// </summary>
+/// <param name="shape"></param>
+/// <param name="plane"></param>
+/// <returns></returns>
+bool CheckCollisionPlaneShape(const Shape& shape, const Plane& plane);

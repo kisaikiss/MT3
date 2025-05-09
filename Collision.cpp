@@ -49,3 +49,34 @@ bool CheckCollisionPlaneSphere(const Sphere& sphere, const Plane& plane) {
 	}
 	return false;
 }
+
+
+bool CheckCollisionPlaneShape(const Shape& shape, const Plane& plane) {
+	//垂直判定を行うために、法線と線の内積を求める
+	float dot = Dot(plane.GetNormal(), shape.GetDiff());
+
+	//垂直 = 平行であるので衝突していない
+	if (dot == 0.0f) {
+		return false;
+	}
+
+	//tを求める
+	float t = (plane.GetDistance() - Dot(shape.GetOrigin(), plane.GetNormal())) / dot;
+
+	//tの値と線の種類によって衝突しているか判断する
+	if (0 <= t && t <= 1) {
+		return true;
+	} else if (t > 1) {
+		if (shape.GetShapeType() == ShapeType::SEGMENT) {
+			return false;
+		} else {
+			return true;
+		}
+	} else {
+		if (shape.GetShapeType() == ShapeType::LINE) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
