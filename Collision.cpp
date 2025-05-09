@@ -1,5 +1,6 @@
 #include "Collision.h"
 #include <Vector3Calculations.h>
+#include <memory>
 
 Vector3 ClosestPoint(const Point& point, const Shape& shape) {
 	// 点と線分の最近接点を求める
@@ -79,4 +80,47 @@ bool CheckCollisionPlaneShape(const Shape& shape, const Plane& plane) {
 			return false;
 		}
 	}
+}
+
+
+bool CheckCollisionTriangleShape(const Shape& shape, const Triangle& triangle) {
+	//三角形の各頂点を取得
+	Vector3 vertices[3]{};
+	triangle.GetVertices(vertices);
+
+	//三角形の各頂点の座標から平面を求める
+	std::unique_ptr<Plane> plane;
+	plane = std::make_unique<Plane>();
+	plane->Initialize(vertices[0], vertices[1], vertices[2]);
+
+	//平面と当たっていなければ三角形とも当たっていないのでfalseで戻す
+	if (!CheckCollisionPlaneShape(shape, *plane)) {
+		return false;
+	}
+
+	Vector3 v01 = vertices[1] - vertices[0];
+	Vector3 v12 = vertices[2] - vertices[1];
+	Vector3 v20 = vertices[0] - vertices[2];
+
+	float t = (plane->GetDistance() - Dot(shape.GetOrigin(), plane->GetNormal())) / Dot(plane->GetNormal(), shape.GetDiff());
+
+	//平面との衝突点
+	Vector3 p = shape.GetOrigin() + shape.GetDiff() * t;
+
+
+	Vector3 v0p = p - vertices[0];
+	Vector3 v1p = p - vertices[1];
+	Vector3 v2p = p - vertices[2];
+
+	//各辺をむすんだベクトルと、頂点と衝突点pを結んだベクトルの外積をとる
+	Vector3 cross01 = Cross(v01, v1p);
+	Vector3 cross12 = Cross(v12, v2p);
+	Vector3 cross20 = Cross(v20, v0p);
+	//全ての小三角形のクロス積と法線が同じ方向を向いていたら衝突
+	if (Dot(cross01, plane->GetNormal()) >= 0.0f &&
+		Dot(cross12, plane->GetNormal()) >= 0.0f &&
+		Dot(cross20, plane->GetNormal()) >= 0.0f) {
+		return true;
+	}
+	return false;
 }

@@ -3,6 +3,7 @@
 #include "Point.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include <Triangle.h>
 
 /// <summary>
 /// 点と線の最近接点を求める関数
@@ -43,3 +44,12 @@ bool CheckCollisionPlaneSphere(const Sphere& sphere, const Plane& plane);
 /// <param name="plane"></param>
 /// <returns></returns>
 bool CheckCollisionPlaneShape(const Shape& shape, const Plane& plane);
+
+
+/// <summary>
+/// 線と三角形の当たり判定
+/// </summary>
+/// <param name="shape"></param>
+/// <param name="triangle"></param>
+/// <returns></returns>
+bool CheckCollisionTriangleShape(const Shape& shape, const Triangle& triangle);
