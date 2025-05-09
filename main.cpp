@@ -41,8 +41,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Shape> shape;
 	shape = std::make_shared<Segment>();
 
-	std::shared_ptr<Plane> plane;
-	plane = std::make_shared<Plane>();
+	std::shared_ptr<Triangle> triangle;
+	triangle = std::make_shared<Triangle>();
 	
 
 	// ウィンドウの×ボタンが押されるまでループ
@@ -59,12 +59,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		shape->Update();
-		plane ->Update();
+		triangle->Update();
 		camera->Update(keys);
 		
-		if (CheckCollisionPlaneShape(*shape, *plane)) {
+		if (CheckCollisionTriangleShape(*shape, *triangle)) {
 			shape->OnCollision();
-		}
+		} 
 
 		///
 		/// ↑更新処理ここまで
@@ -76,7 +76,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		shape->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		plane->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		triangle->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		
 		///
 		/// ↑描画処理ここまで

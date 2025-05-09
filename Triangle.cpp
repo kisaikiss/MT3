@@ -19,12 +19,12 @@ Triangle::Triangle() {
 	scale_ = { 1.0f,1.0f,1.0f };
 	rotate_ = { 0.0f,0.0f,0.0f };
 	translate_ = { 0.0f,0.0f,0.0f };
-	color_ = RED;
+	color_ = WHITE;
 }
 
 void Triangle::Update() {
 #ifdef _DEBUG
-	/*std::stringstream myNumString;
+	std::stringstream myNumString;
 	myNumString << myNumber_;
 	std::string name = "Triangle";
 	name = name + myNumString.str();
@@ -32,8 +32,7 @@ void Triangle::Update() {
 	ImGui::DragFloat3("vertices1", &vertices_[0].x, 0.01f);
 	ImGui::DragFloat3("vertices2", &vertices_[1].x, 0.01f);
 	ImGui::DragFloat3("vertices3", &vertices_[2].x, 0.01f);
-	ImGui::DragFloat3("translate", &translate_.x, 0.01f);
-	ImGui::End();*/
+	ImGui::End();
 #endif // _DEBUG
 }
 
@@ -50,7 +49,7 @@ void Triangle::Draw(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& view
 	}
 	Novice::DrawTriangle(static_cast<int>(screenVertices[0].x), static_cast<int>(screenVertices[0].y),
 		static_cast<int>(screenVertices[1].x), static_cast<int>(screenVertices[1].y),
-		static_cast<int>(screenVertices[2].x), static_cast<int>(screenVertices[2].y), color_, kFillModeSolid);
+		static_cast<int>(screenVertices[2].x), static_cast<int>(screenVertices[2].y), color_, kFillModeWireFrame);
 }
 
 void Triangle::GetVertices(Vector3* vertices) const {
