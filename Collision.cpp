@@ -151,3 +151,36 @@ bool CheckCollisionSphereAABB(const AABB& aabb, const Sphere& sphere) {
 	}
 	return false;
 }
+
+bool CheckCollisionShapeAABB(const AABB& aabb, const Shape& shape) {
+
+	//衝突点を計算する
+	float tXMin = (aabb.min.x - shape.GetOrigin().x) / shape.GetDiff().x;
+	float tXMax = (aabb.max.x - shape.GetOrigin().x) / shape.GetDiff().x;
+	float tYMin = (aabb.min.y - shape.GetOrigin().y) / shape.GetDiff().y;
+	float tYMax = (aabb.max.y - shape.GetOrigin().y) / shape.GetDiff().y;
+	float tZMin = (aabb.min.z - shape.GetOrigin().z) / shape.GetDiff().z;
+	float tZMax = (aabb.max.z - shape.GetOrigin().z) / shape.GetDiff().z;
+
+	//衝突点の近い方と遠い方を計算する
+	float tNearX = std::min(tXMin, tXMax);
+	float tFarX = std::max(tXMin, tXMax);
+	float tNearY = std::min(tYMin, tYMax);
+	float tFarY = std::max(tYMin, tYMax);
+	float tNearZ = std::min(tZMin, tZMax);
+	float tFarZ = std::max(tZMin, tZMax);
+
+	//AABBとの衝突点(貫通点)のtが小さい方
+	float tmin = std::max(std::max(tNearX, tNearY), tNearZ);
+	//AABBとの衝突点(貫通点)のtが大きい方
+	float tmax = std::min(std::min(tFarX, tFarY), tFarZ);
+	if (shape.GetShapeType() == ShapeType::SEGMENT) {
+		if (tmax < 0.f || tmin > 1.f) {
+			return false;
+		}
+	}
+	if (tmin <= tmax) {
+		return true;
+	}
+	return false;
+}
