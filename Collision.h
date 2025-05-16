@@ -63,3 +63,12 @@ bool CheckCollisionTriangleShape(const Shape& shape, const Triangle& triangle);
 /// <param name="aabb2"></param>
 /// <returns></returns>
 bool CheckCollisionAABB(const AABB& aabb, const AABB& aabb2);
+
+
+/// <summary>
+/// AABBと球の当たり判定
+/// </summary>
+/// <param name="aabb"></param>
+/// <param name="sphere"></param>
+/// <returns></returns>
+bool CheckCollisionSphereAABB(const AABB& aabb, const Sphere& sphere);

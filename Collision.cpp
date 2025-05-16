@@ -1,6 +1,7 @@
 #include "Collision.h"
 #include <Vector3Calculations.h>
 #include <memory>
+#include <algorithm>
 
 Vector3 ClosestPoint(const Point& point, const Shape& shape) {
 	// 点と線分の最近接点を求める
@@ -129,6 +130,23 @@ bool CheckCollisionAABB(const AABB& aabb, const AABB& aabb2) {
 	if ((aabb.min.x <= aabb2.max.x && aabb.max.x >= aabb2.min.x) &&
 		(aabb.min.y <= aabb2.max.y && aabb.max.y >= aabb2.min.y) &&
 		(aabb.min.z <= aabb2.max.z && aabb.max.z >= aabb2.min.z)) {
+		return true;
+	}
+	return false;
+}
+
+
+bool CheckCollisionSphereAABB(const AABB& aabb, const Sphere& sphere) {
+	//最近接点を求める
+	Vector3 closestPoint{
+		std::clamp(sphere.GetPos().x,aabb.min.x,aabb.max.x),
+		std::clamp(sphere.GetPos().y,aabb.min.y,aabb.max.y),
+		std::clamp(sphere.GetPos().z,aabb.min.z,aabb.max.z)
+	};
+	//最近接点と球の中心との距離を求める
+	float distance = Length(closestPoint - sphere.GetPos());
+	//距離が半径よりも小さければ衝突
+	if (distance <= sphere.GetRadius()) {
 		return true;
 	}
 	return false;

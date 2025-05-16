@@ -53,9 +53,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		1.0f, 1.0f, 1.0f
 	};
 
-	std::shared_ptr<Box> box2;
-	box2 = std::make_shared<Box>();
-	box2->SetWorldAABB(aabb1); // AABBの最小点と最大点を指定して初期化
+	std::shared_ptr<Sphere> sphere;
+	sphere = std::make_shared<Sphere>();
+	
 	
 
 	// ウィンドウの×ボタンが押されるまでループ
@@ -71,11 +71,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
-		box2->Update();
+		sphere->Update();
 		box->Update();
 		camera->Update(keys);
 		
-		if (CheckCollisionAABB(box->GetWorldAABB(), box2->GetWorldAABB())) {
+		if (CheckCollisionSphereAABB(box->GetWorldAABB(), *sphere)) {
 			box->OnCollision();
 		}
 	
@@ -88,7 +88,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		box2->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		box->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		
 		///
