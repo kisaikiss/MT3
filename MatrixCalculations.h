@@ -1,6 +1,7 @@
 #pragma once
 #include "Matrix4x4.h"
 #include "Vector3Class.h"
+#include "OBB.h"
 #include <cmath>
 #include <cassert>
 
@@ -148,3 +149,18 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, f
 /// <param name="y"></param>
 /// <param name="matrix"></param>
 void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label);
+
+/// <summary>
+/// OBBの世界空間座標系での行列を作成
+/// </summary>
+/// <param name="center">OBBの中心</param>
+/// <param name="orientations"></param>
+/// <returns></returns>
+Matrix4x4 MakeWorldOBB(Vector3 center, Vector3 orientations[3]);
+
+/// <summary>
+/// OBBの世界空間座標系での行列を作成
+/// </summary>
+/// <param name="obb">OBB</param>
+/// <returns></returns>
+Matrix4x4 MakeWorldOBB(OBB obb);

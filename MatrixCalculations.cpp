@@ -238,3 +238,29 @@ void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label
 		}
 	}
 }
+
+Matrix4x4 MakeWorldOBB(Vector3 center, Vector3 orientations[3]) {
+	Matrix4x4 result{};
+	result = {
+		{
+			orientations[0].x, orientations[0].y,orientations[0].z,0.f,
+			orientations[1].x, orientations[1].y,orientations[1].z,0.f,
+			orientations[2].x, orientations[2].y,orientations[2].z,0.f,
+			center.x,		   center.y,		 center.z,		   1.f
+		}
+	};
+	return result;
+}
+
+Matrix4x4 MakeWorldOBB(OBB obb) {
+	Matrix4x4 result{};
+	result = {
+		{
+			obb.orientations[0].x, obb.orientations[0].y, obb.orientations[0].z,0.f,
+			obb.orientations[1].x, obb.orientations[1].y, obb.orientations[1].z,0.f,
+			obb.orientations[2].x, obb.orientations[2].y, obb.orientations[2].z,0.f,
+			obb.center.x,		   obb.center.y,		  obb.center.z,		   1.f
+		}
+	};
+	return result;
+}

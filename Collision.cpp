@@ -2,6 +2,7 @@
 #include <Vector3Calculations.h>
 #include <memory>
 #include <algorithm>
+#include <MatrixCalculations.h>
 
 Vector3 ClosestPoint(const Point& point, const Shape& shape) {
 	// 点と線分の最近接点を求める
@@ -184,3 +185,21 @@ bool CheckCollisionShapeAABB(const AABB& aabb, const Shape& shape) {
 	}
 	return false;
 }
+
+bool CheckCollisionSphereOBB(const OBB& obb, const Sphere& sphere) {
+	Matrix4x4 obbWorldMatrix = MakeWorldOBB(obb);
+	Matrix4x4 obbWorldMatrixInverse = Inverse(obbWorldMatrix);
+	Vector3 centerInOBBLocalSpace = Transform(sphere.GetPos(), obbWorldMatrixInverse);
+
+	AABB aabbOBBLocal{-obb.size.x, -obb.size.y, - obb.size.z,
+					   obb.size.x,  obb.size.y,   obb.size.z };
+	Sphere* sphereOBBLocal = new Sphere();
+	sphereOBBLocal->SetPos(centerInOBBLocalSpace);
+	sphereOBBLocal->SetRadius(sphere.GetRadius());
+
+	bool result = CheckCollisionSphereAABB(aabbOBBLocal, *sphereOBBLocal);
+	delete sphereOBBLocal;;
+
+	return result;
+}
+

@@ -11,6 +11,7 @@
 #include "Point.h"
 #include "Plane.h"
 #include "Box.h"
+#include "OBBbox.h"
 
 #include "Define.h"
 
@@ -44,17 +45,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		0.0f, 0.0f, 0.0f };
 	
 
-	std::shared_ptr<Box> box;
-	box = std::make_shared<Box>();
-	box->SetWorldAABB(aabb1); // AABBの最小点と最大点を指定して初期化
+	std::shared_ptr<OBBbox> box;
+	box = std::make_shared<OBBbox>();
+	//box->SetWorldAABB(aabb1); // AABBの最小点と最大点を指定して初期化
 
 	aabb1 = {
 		0.2f, 0.2f, 0.2f,
 		1.0f, 1.0f, 1.0f
 	};
 
-	std::shared_ptr<Shape> segment;
-	segment = std::make_shared<Segment>();
+	std::shared_ptr<Sphere> sphere;
+	sphere = std::make_shared<Sphere>();
 	
 	
 
@@ -71,11 +72,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
-		segment->Update();
+		sphere->Update();
 		box->Update();
 		camera->Update(keys);
 		
-		if (CheckCollisionShapeAABB(box->GetWorldAABB(), *segment)) {
+		if (CheckCollisionSphereOBB(box->GetOBB(),*sphere)) {
 			box->OnCollision();
 		}
 	
@@ -88,7 +89,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		segment->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		box->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		
 		///
