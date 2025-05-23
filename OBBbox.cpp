@@ -9,7 +9,7 @@ int32_t OBBbox::obbBoxNum = 0;
 OBBbox::OBBbox() {
 	obbBoxNum++;
 	myNumber_ = obbBoxNum;
-	obb_.center = {0.f,0.f,0.f};
+	obb_.center = { 0.f,0.f,0.f };
 	rotate_ = { 0.f,0.f,0.f };
 	obb_.size = { 1.f,1.f,1.f };
 	color_ = WHITE;
@@ -41,7 +41,7 @@ void OBBbox::Update() {
 }
 
 void OBBbox::Draw(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix) const {
-	Matrix4x4 worldMatrix = MakeAffineMatrix({1.f,1.f,1.f} , rotate_, obb_.center);
+	Matrix4x4 worldMatrix = MakeAffineMatrix({ 1.f,1.f,1.f }, rotate_, obb_.center);
 	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, viewProjectionMatrix);
 
 	const int cubeIndex[12][2]{
@@ -52,14 +52,14 @@ void OBBbox::Draw(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewpo
 
 	//キューブの各頂点の位置
 	Vector3 cubeVertices[8] = {
-		{obb_.center.x - obb_.size.x, obb_.center.y - obb_.size.y, obb_.center.z - obb_.size.z},
-		{obb_.center.x + obb_.size.x, obb_.center.y - obb_.size.y, obb_.center.z - obb_.size.z},
-		{obb_.center.x - obb_.size.x, obb_.center.y + obb_.size.y, obb_.center.z - obb_.size.z},
-		{obb_.center.x + obb_.size.x, obb_.center.y + obb_.size.y, obb_.center.z - obb_.size.z},
-		{obb_.center.x - obb_.size.x, obb_.center.y - obb_.size.y, obb_.center.z + obb_.size.z},
-		{obb_.center.x + obb_.size.x, obb_.center.y - obb_.size.y, obb_.center.z + obb_.size.z},
-		{obb_.center.x - obb_.size.x, obb_.center.y + obb_.size.y, obb_.center.z + obb_.size.z},
-		{obb_.center.x + obb_.size.x, obb_.center.y + obb_.size.y, obb_.center.z + obb_.size.z}
+		{-obb_.size.x, -obb_.size.y,  -obb_.size.z},
+		{obb_.size.x, -obb_.size.y,  -obb_.size.z},
+		{-obb_.size.x,  obb_.size.y,  -obb_.size.z},
+		{obb_.size.x,  obb_.size.y,  -obb_.size.z},
+		{-obb_.size.x,  -obb_.size.y,  obb_.size.z},
+		{obb_.size.x,  -obb_.size.y,  obb_.size.z},
+		{-obb_.size.x,  obb_.size.y,  obb_.size.z},
+		{obb_.size.x,  obb_.size.y,  obb_.size.z}
 	};
 
 	// スクリーン座標を求める
