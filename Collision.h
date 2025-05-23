@@ -6,6 +6,7 @@
 #include "Plane.h"
 #include <Triangle.h>
 #include "AABB.h"
+#include "OBB.h"
 
 /// <summary>
 /// 点と線の最近接点を求める関数
@@ -81,3 +82,11 @@ bool CheckCollisionSphereAABB(const AABB& aabb, const Sphere& sphere);
 /// <param name="shape"></param>
 /// <returns></returns>
 bool CheckCollisionShapeAABB(const AABB& aabb, const Shape& shape);
+
+/// <summary>
+/// OBBと球の当たり判定
+/// </summary>
+/// <param name="obb"></param>
+/// <param name="sphere"></param>
+/// <returns></returns>
+bool CheckCollisionSphereOBB(const OBB& obb, const Sphere& sphere);

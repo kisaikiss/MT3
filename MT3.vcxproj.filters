@@ -38,6 +38,9 @@
     <Filter Include="Point">
       <UniqueIdentifier>{35d98f8f-f830-4618-9e0d-f98e0d7b3027}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Box">
+      <UniqueIdentifier>{f9443431-85f8-4fc3-abfe-2dda1ba299b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -97,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="Point.cpp">
       <Filter>Point</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Box</Filter>
+    </ClCompile>
+    <ClCompile Include="OBBbox.cpp">
+      <Filter>Box</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +211,18 @@
     </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Point</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Box</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Box</Filter>
+    </ClInclude>
+    <ClInclude Include="OBB.h">
+      <Filter>Box</Filter>
+    </ClInclude>
+    <ClInclude Include="OBBbox.h">
+      <Filter>Box</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
