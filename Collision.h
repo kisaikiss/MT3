@@ -90,3 +90,11 @@ bool CheckCollisionShapeAABB(const AABB& aabb, const Shape& shape);
 /// <param name="sphere"></param>
 /// <returns></returns>
 bool CheckCollisionSphereOBB(const OBB& obb, const Sphere& sphere);
+
+/// <summary>
+/// 線とOBBの当たり判定
+/// </summary>
+/// <param name="obb"></param>
+/// <param name="shape"></param>
+/// <returns></returns>
+bool CheckCollisionShapeOBB(const OBB& obb, const Shape& shape);

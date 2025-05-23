@@ -203,3 +203,29 @@ bool CheckCollisionSphereOBB(const OBB& obb, const Sphere& sphere) {
 	return result;
 }
 
+bool CheckCollisionShapeOBB(const OBB& obb, const Shape& shape) {
+	Matrix4x4 obbWorldMatrix = MakeWorldOBB(obb);
+	Matrix4x4 obbWorldMatrixInverse = Inverse(obbWorldMatrix);
+	Vector3 localOrigin = Transform(shape.GetOrigin(), obbWorldMatrixInverse);
+	Vector3 localEnd = Transform(shape.GetOrigin() + shape.GetDiff(), obbWorldMatrixInverse);
+
+	AABB aabbOBBLocal{ -obb.size.x, -obb.size.y, -obb.size.z,
+					   obb.size.x,  obb.size.y,   obb.size.z };
+
+	Shape* localShape = nullptr;
+	if (shape.GetShapeType() == ShapeType::SEGMENT) {
+		localShape = new Segment();
+	} else if (shape.GetShapeType() == ShapeType::RAY) {
+		localShape = new Ray();
+	} else {
+		localShape = new Line();
+	}
+	
+	localShape->SetOrigin(localOrigin);
+	localShape->SetDiff(localEnd - localOrigin);
+	
+	bool result = CheckCollisionShapeAABB(aabbOBBLocal, *localShape);
+	delete localShape;
+	return result;
+}
+
