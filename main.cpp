@@ -40,24 +40,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	AABB aabb1 = {
-		-0.5f, -0.5f, -0.5f,
-		0.0f, 0.0f, 0.0f };
-	
 
-	std::shared_ptr<OBBbox> box;
-	box = std::make_shared<OBBbox>();
-	//box->SetWorldAABB(aabb1); // AABBの最小点と最大点を指定して初期化
+	std::shared_ptr<OBBbox> box1;
+	box1 = std::make_shared<OBBbox>();
+	box1->SetPosition({ -1.3f,0.f,0.f });
+	box1->SetRotate({ 0.0f,0.0f,2.0f });
 
-	aabb1 = {
-		0.2f, 0.2f, 0.2f,
-		1.0f, 1.0f, 1.0f
-	};
+	std::shared_ptr<Box> box2;
+	box2 = std::make_shared<Box>();
+	//box2->SetPosition({ 1.f,0.f,0.f });
 
-	std::shared_ptr<Shape> shape;
-	shape = std::make_shared<Segment>();
 	
-	
+	//Box
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -72,12 +66,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
-		shape->Update();
-		box->Update();
+		box1->Update();
+		box2->Update();
 		camera->Update(keys);
 		
-		if (CheckCollisionShapeOBB(box->GetOBB(),*shape)) {
-			box->OnCollision();
+		if (CheckCollisionOBBAABB(box1->GetOBB(), box2->GetWorldAABB())) {
+			box1->OnCollision();
 		}
 	
 		///
@@ -89,9 +83,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		shape->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		box->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		
+		box1->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		box2->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+
 		///
 		/// ↑描画処理ここまで
 		///

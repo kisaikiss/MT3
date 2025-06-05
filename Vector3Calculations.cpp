@@ -18,6 +18,10 @@ float Length(Vector3 vector3) {
 	return sqrtf(powf(vector3.x, 2.0f) + powf(vector3.y, 2.0f) + powf(vector3.z, 2.0f));
 }
 
+float LengthSquared(const Vector3& v) {
+	return v.x * v.x + v.y * v.y + v.z * v.z;
+}
+
 Vector3 Normalize(const Vector3& vector3) {
 	float length = Length(vector3);
 	assert(length != 0);

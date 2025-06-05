@@ -16,6 +16,8 @@ public:
 
 	void OnCollision();
 
+	void SetPosition(const Vector3& position) { obb_.center = position; }
+	void SetRotate(const Vector3& rotate) { rotate_ = rotate; }
 	OBB GetOBB() const { return obb_; }
 	
 private:

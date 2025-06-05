@@ -229,3 +229,96 @@ bool CheckCollisionShapeOBB(const OBB& obb, const Shape& shape) {
 	return result;
 }
 
+bool CheckCollisionOBB(const OBB& obb1, const OBB& obb2) {
+	Vector3 axes[15];
+
+	// 各OBBの座標軸を分離軸として追加
+	for (int i = 0; i < 3; ++i) {
+		axes[i] = obb1.orientations[i];
+		axes[i + 3] = obb2.orientations[i];
+	}
+
+	// 各座標軸の外積を分離軸として追加
+	int index = 6;
+	for (int i = 0; i < 3; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			axes[index++] = Cross(obb1.orientations[i], obb2.orientations[j]);
+		}
+	}
+
+	// すべての分離軸で投影のチェック
+	for (int i = 0; i < 15; ++i) {
+		if (!OverlapOnAxis(obb1, obb2, axes[i])) {
+			return false; // 分離軸がある場合は衝突していない
+		}
+	}
+
+	return true; // すべての軸で区間が重なっていれば衝突
+
+}
+
+bool CheckCollisionOBBAABB(const OBB& obb, const AABB& aabb) {
+	OBB obb2 = AABB2OBB(aabb);
+	return CheckCollisionOBB(obb, obb2);
+}
+
+OBB AABB2OBB(AABB aabb) {
+	OBB result{};
+	result.center = (aabb.max + aabb.min) / 2.f;
+
+	result.size = (aabb.max - aabb.min) / 2.f;
+
+	Vector3 rotate = { 0.f,0.f,0.f };
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(rotate);
+
+	result.orientations[0] = { rotateMatrix.m[0][0], rotateMatrix.m[0][1] ,rotateMatrix.m[0][2] };
+	result.orientations[1] = { rotateMatrix.m[1][0], rotateMatrix.m[1][1] ,rotateMatrix.m[1][2] };
+	result.orientations[2] = { rotateMatrix.m[2][0], rotateMatrix.m[2][1] ,rotateMatrix.m[2][2] };
+
+	return result;
+}
+
+bool OverlapOnAxis(const OBB& obb1, const OBB& obb2, const Vector3& axis) {
+	// 軸の正規化 (長さがゼロに近い場合は衝突しない)
+	if (LengthSquared(axis) < 1e-6f) { 
+		return true;
+	}
+
+	// OBBの8頂点を計算
+	Vector3 corners1[8], corners2[8];
+	ComputeOBBCorners(obb1, corners1);
+	ComputeOBBCorners(obb2, corners2);
+
+	// 各OBBの頂点を分離軸に投影して最小値・最大値を求める
+	float min1 = FLT_MAX, max1 = -FLT_MAX;
+	float min2 = FLT_MAX, max2 = -FLT_MAX;
+
+	for (int i = 0; i < 8; ++i) {
+		float projection1 = Dot(corners1[i], axis);
+		float projection2 = Dot(corners2[i], axis);
+
+		min1 = std::min(min1, projection1);
+		max1 = std::max(max1, projection1);
+
+		min2 = std::min(min2, projection2);
+		max2 = std::max(max2, projection2);
+	}
+
+	// 投影範囲が重なっていない場合、OBBは衝突していない
+	return !(max1 < min2 || max2 < min1);
+}
+
+void ComputeOBBCorners(const OBB& obb, Vector3 corners[8]) {
+	Vector3 xAxis = obb.orientations[0] * obb.size.x;
+	Vector3 yAxis = obb.orientations[1] * obb.size.y;
+	Vector3 zAxis = obb.orientations[2] * obb.size.z;
+
+	corners[0] = obb.center + xAxis + yAxis + zAxis;
+	corners[1] = obb.center + xAxis + yAxis - zAxis;
+	corners[2] = obb.center + xAxis - yAxis + zAxis;
+	corners[3] = obb.center + xAxis - yAxis - zAxis;
+	corners[4] = obb.center - xAxis + yAxis + zAxis;
+	corners[5] = obb.center - xAxis + yAxis - zAxis;
+	corners[6] = obb.center - xAxis - yAxis + zAxis;
+	corners[7] = obb.center - xAxis - yAxis - zAxis;
+}

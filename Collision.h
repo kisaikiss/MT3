@@ -98,3 +98,44 @@ bool CheckCollisionSphereOBB(const OBB& obb, const Sphere& sphere);
 /// <param name="shape"></param>
 /// <returns></returns>
 bool CheckCollisionShapeOBB(const OBB& obb, const Shape& shape);
+
+/// <summary>
+/// OBB同士の当たり判定
+/// </summary>
+/// <param name="obb1"></param>
+/// <param name="obb2"></param>
+/// <returns></returns>
+bool CheckCollisionOBB(const OBB& obb1, const OBB& obb2);
+
+/// <summary>
+/// OBBとAABBとの当たり判定
+/// </summary>
+/// <param name="obb"></param>
+/// <param name="aabb"></param>
+/// <returns></returns>
+bool CheckCollisionOBBAABB(const OBB& obb, const AABB& aabb);
+
+/// <summary>
+/// AABBをOBBに変換する
+/// </summary>
+/// <param name="aabb"></param>
+/// <returns></returns>
+OBB AABB2OBB(AABB aabb);
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="obb1"></param>
+/// <param name="obb2"></param>
+/// <param name="axis"></param>
+/// <returns></returns>
+bool OverlapOnAxis(const OBB& obb1, const OBB& obb2, const Vector3& axis);
+
+/// <summary>
+/// OBBの各頂点を計算
+/// </summary>
+/// <param name="obb">計算したい各頂点</param>
+/// <param name="corners">計算結果を入れる変数</param>
+void ComputeOBBCorners(const OBB& obb, Vector3 corners[8]);
+
+

@@ -17,6 +17,10 @@ Vector3 Vector3::operator*(const float& scalar) const {
 	return { x * scalar, y * scalar, z * scalar };
 }
 
+Vector3 Vector3::operator/(const float& scalar) const {
+	return { x / scalar, y / scalar, z / scalar };
+}
+
 Vector3 Vector3::operator=(float scalar) const {
 	return{ scalar, scalar, scalar };
 }
