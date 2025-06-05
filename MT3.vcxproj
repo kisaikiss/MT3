@@ -125,6 +125,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="DrawGrid.cpp" />
     <ClCompile Include="Lerp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matrix4x4Operator.cpp" />
     <ClCompile Include="MatrixCalculations.cpp" />
     <ClCompile Include="OBBbox.cpp" />
     <ClCompile Include="Plane.cpp" />
@@ -133,7 +134,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector3Calculations.cpp" />
-    <ClCompile Include="Vector3Class.cpp" />
+    <ClCompile Include="Vector3Operator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
@@ -172,6 +173,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="Draw.h" />
     <ClInclude Include="DrawGrid.h" />
     <ClInclude Include="Lerp.h" />
+    <ClInclude Include="Matrix4x4Operator.h" />
     <ClInclude Include="MatrixCalculations.h" />
     <ClInclude Include="OBB.h" />
     <ClInclude Include="OBBbox.h" />
@@ -182,7 +184,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector3Calculations.h" />
-    <ClInclude Include="Vector3Class.h" />
+    <ClInclude Include="Vector3Operator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MT3.rc" />

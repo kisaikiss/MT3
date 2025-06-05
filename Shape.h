@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector3Class.h"
+#include "Vector3.h"
 #include "Point.h"
 #include "Matrix4x4.h"
 #include <cstdint>

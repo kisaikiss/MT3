@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector3Class.h"
+#include "Vector3.h"
 
 /// <summary>
 /// 線形補間(三次元)

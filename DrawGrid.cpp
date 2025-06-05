@@ -1,6 +1,6 @@
 #include "DrawGrid.h"
 #include <cstdint>
-#include <Vector3Class.h>
+#include <Vector3.h>
 #include <MatrixCalculations.h>
 #include <Novice.h>
 

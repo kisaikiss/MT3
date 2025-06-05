@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "MatrixCalculations.h"
 #include "Define.h"
+#include "Vector3Operator.h"
 
 #include <Novice.h>
 

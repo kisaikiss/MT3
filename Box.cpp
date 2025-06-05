@@ -1,5 +1,6 @@
 #include "Box.h"
 #include "MatrixCalculations.h"
+#include "Vector3Operator.h"
 #include <string>
 #include <sstream>
 #include <Novice.h>

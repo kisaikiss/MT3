@@ -1,6 +1,7 @@
 #include "Shape.h"
 #include <Vector3Calculations.h>
 #include <MatrixCalculations.h>
+#include "Vector3Operator.h"
 #include <Novice.h>
 #include <string>
 #include <sstream>

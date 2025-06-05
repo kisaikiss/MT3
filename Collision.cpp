@@ -1,5 +1,6 @@
 #include "Collision.h"
 #include <Vector3Calculations.h>
+#include "Vector3Operator.h"
 #include <memory>
 #include <algorithm>
 #include <MatrixCalculations.h>
