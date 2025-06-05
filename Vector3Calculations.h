@@ -29,6 +29,13 @@ Vector3 Cross(const Vector3& v1, const Vector3& v2);
 float Length(Vector3 vector3);
 
 /// <summary>
+/// ベクトルの長さの2乗
+/// </summary>
+/// <param name="v"></param>
+/// <returns></returns>
+float LengthSquared(const Vector3& v);
+
+/// <summary>
 /// ベクトルの正規化
 /// </summary>
 /// <param name="vector3"></param>
