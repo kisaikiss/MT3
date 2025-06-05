@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector3Class.h"
+#include "Vector3.h"
 
 struct AABB {
 	Vector3 min; // AABBの最小点

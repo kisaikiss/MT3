@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "Vector3Class.h"
+#include "Vector3.h"
 #include "Matrix4x4.h"
 
 class Arm {
