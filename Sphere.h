@@ -17,6 +17,7 @@ public:
 
 	void SetPos(const Vector3& position);
 	void SetRadius(float radius) { radius_ = radius; }
+	void SetColor(uint32_t color) { color_ = color; }
 
 	Vector3 GetPos() const { return centerPos_; }
 	float GetRadius() const { return radius_; }

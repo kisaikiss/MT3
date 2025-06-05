@@ -41,6 +41,9 @@
     <Filter Include="Box">
       <UniqueIdentifier>{f9443431-85f8-4fc3-abfe-2dda1ba299b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bezier">
+      <UniqueIdentifier>{9afe4ebd-77dc-417b-a5cc-ecd3b109ac14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -106,6 +109,12 @@
     </ClCompile>
     <ClCompile Include="OBBbox.cpp">
       <Filter>Box</Filter>
+    </ClCompile>
+    <ClCompile Include="Lerp.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Bezier.cpp">
+      <Filter>Bezier</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +232,12 @@
     </ClInclude>
     <ClInclude Include="OBBbox.h">
       <Filter>Box</Filter>
+    </ClInclude>
+    <ClInclude Include="Lerp.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Bezier.h">
+      <Filter>Bezier</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

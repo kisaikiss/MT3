@@ -108,6 +108,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bezier.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp" />
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp" />
@@ -120,6 +121,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Define.cpp" />
     <ClCompile Include="DrawGrid.cpp" />
+    <ClCompile Include="Lerp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatrixCalculations.cpp" />
     <ClCompile Include="OBBbox.cpp" />
@@ -133,6 +135,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="Bezier.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h" />
@@ -164,6 +167,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DrawGrid.h" />
+    <ClInclude Include="Lerp.h" />
     <ClInclude Include="MatrixCalculations.h" />
     <ClInclude Include="OBB.h" />
     <ClInclude Include="OBBbox.h" />

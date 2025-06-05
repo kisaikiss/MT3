@@ -12,6 +12,7 @@
 #include "Plane.h"
 #include "Box.h"
 #include "OBBbox.h"
+#include "Bezier.h"
 
 #include "Define.h"
 
@@ -40,16 +41,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
+	Vector3 controlPoints[3] = {
+		{-0.8f,0.58f,1.0f},
+		{1.76f,1.0f,-0.3f},
+		{0.94f,-0.7f,2.3f},
+	};
 
-	std::shared_ptr<OBBbox> box1;
-	box1 = std::make_shared<OBBbox>();
-	box1->SetPosition({ -1.3f,0.f,0.f });
-	box1->SetRotate({ 0.0f,0.0f,2.0f });
-
-	std::shared_ptr<Box> box2;
-	box2 = std::make_shared<Box>();
-	//box2->SetPosition({ 1.f,0.f,0.f });
-
+	std::unique_ptr<Bezier> bezier;
+	bezier = std::make_unique<Bezier>();
+	bezier->SetControlPoints(controlPoints[0], controlPoints[1], controlPoints[2]);
 	
 	//Box
 
@@ -66,14 +66,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
-		box1->Update();
-		box2->Update();
+		bezier->Update();
+		
 		camera->Update(keys);
 		
-		if (CheckCollisionOBBAABB(box1->GetOBB(), box2->GetWorldAABB())) {
-			box1->OnCollision();
-		}
-	
+		
 		///
 		/// ↑更新処理ここまで
 		///
@@ -83,8 +80,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		box1->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		box2->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		bezier->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+
 
 		///
 		/// ↑描画処理ここまで
