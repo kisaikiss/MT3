@@ -3,16 +3,11 @@
 #include "Vector3Calculations.h"
 #include "Matrix4x4.h"
 #include "MatrixCalculations.h"
-#include "Triangle.h"
 #include "Camera.h"
-#include "Sphere.h"
 #include "DrawGrid.h"
-#include "Shape.h"
-#include "Point.h"
-#include "Plane.h"
-#include "Box.h"
-#include "OBBbox.h"
-#include "Bezier.h"
+#include "Draw.h"
+
+#include "Arm.h"
 
 #include "Define.h"
 
@@ -35,23 +30,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
 	// キー入力結果を受け取る箱
-	char keys[256] = {0};
-	char preKeys[256] = {0};
+	char keys[256] = { 0 };
+	char preKeys[256] = { 0 };
 
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	Vector3 controlPoints[3] = {
-		{-0.8f,0.58f,1.0f},
-		{1.76f,1.0f,-0.3f},
-		{0.94f,-0.7f,2.3f},
-	};
-
-	std::unique_ptr<Bezier> bezier;
-	bezier = std::make_unique<Bezier>();
-	bezier->SetControlPoints(controlPoints[0], controlPoints[1], controlPoints[2]);
-	
-	//Box
+	std::unique_ptr<Arm> arm;
+	arm = std::make_unique<Arm>();
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -65,12 +51,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-		
-		bezier->Update();
-		
+
+
 		camera->Update(keys);
-		
-		
+		arm->Update();
+
 		///
 		/// ↑更新処理ここまで
 		///
@@ -78,11 +63,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-		
+
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		bezier->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-
-
+		arm->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		///
 		/// ↑描画処理ここまで
 		///
