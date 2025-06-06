@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "DrawGrid.h"
 #include "Draw.h"
-
+#include "Pendulum.h"
 
 
 #include "Arm.h"
@@ -43,13 +43,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	float deltaTime = 1.0f / 60.0f;
 
-	float angularVelocity = std::numbers::pi_v<float>;
-	float angle = 0.0f;
-	float radius = 0.8f;
+	Pendulum pendulum{};
+	pendulum.anchor = { 0.0f,1.0f,0.0f };
+	pendulum.length = 0.8f;
+	pendulum.angle = 0.7f;
+	pendulum.angularVelocity = 0.0f;
+	pendulum.angularAcceleration = 0.0f;
 
 	Vector3 p{};
-	p.x = std::cos(angle) * radius;
-	p.y = std::sin(angle) * radius;
+	p.x = pendulum.anchor.x + std::sin(pendulum.angle) * pendulum.length;
+	p.y = pendulum.anchor.y - std::cos(pendulum.angle) * pendulum.length;
+	p.z = pendulum.anchor.z;
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -76,14 +80,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		camera->Update(keys);
 		if (isStart) {
-			angle += angularVelocity * deltaTime;
+			pendulum.angularAcceleration = -(9.8f / pendulum.length) * std::sin(pendulum.angle);
+			pendulum.angularVelocity += pendulum.angularAcceleration * deltaTime;
+			pendulum.angle += pendulum.angularVelocity * deltaTime;
 
-			p.x = std::cos(angle) * radius;
-			p.y = std::sin(angle) * radius;
+			p.x = pendulum.anchor.x + std::sin(pendulum.angle) * pendulum.length;
+			p.y = pendulum.anchor.y - std::cos(pendulum.angle) * pendulum.length;
+			p.z = pendulum.anchor.z;
 		}
-
-		
-		
 
 		///
 		/// ↑更新処理ここまで
@@ -96,6 +100,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 
 		DrawSphere(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), p, 0.05f, WHITE);
+		DrawLine3D(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), pendulum.anchor, p, WHITE);
 		
 		///
 		/// ↑描画処理ここまで
