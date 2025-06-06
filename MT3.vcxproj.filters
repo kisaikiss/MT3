@@ -44,6 +44,9 @@
     <Filter Include="Bezier">
       <UniqueIdentifier>{9afe4ebd-77dc-417b-a5cc-ecd3b109ac14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Spring">
+      <UniqueIdentifier>{035ae518-77fe-4e8c-b030-3c9b18c7596c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -69,9 +72,6 @@
       <Filter>KamataEngine\Source</Filter>
     </ClCompile>
     <ClCompile Include="Vector3Calculations.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3Class.cpp">
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="MatrixCalculations.cpp">
@@ -115,6 +115,21 @@
     </ClCompile>
     <ClCompile Include="Bezier.cpp">
       <Filter>Bezier</Filter>
+    </ClCompile>
+    <ClCompile Include="Arm.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix4x4Operator.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3Operator.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringClass.cpp">
+      <Filter>KamataEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +206,6 @@
     <ClInclude Include="Vector3Calculations.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3Class.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="MatrixCalculations.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -239,6 +251,15 @@
     <ClInclude Include="Bezier.h">
       <Filter>Bezier</Filter>
     </ClInclude>
+    <ClInclude Include="Arm.h" />
+    <ClInclude Include="Draw.h" />
+    <ClInclude Include="Matrix4x4Operator.h" />
+    <ClInclude Include="Vector3Operator.h" />
+    <ClInclude Include="Spring.h">
+      <Filter>Spring</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="SpringClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MT3.rc" />
