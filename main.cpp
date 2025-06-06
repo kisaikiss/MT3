@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "DrawGrid.h"
 #include "Draw.h"
-#include "Pendulum.h"
+#include "ConicalPendulum.h"
 
 
 #include "Arm.h"
@@ -43,17 +43,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	float deltaTime = 1.0f / 60.0f;
 
-	Pendulum pendulum{};
-	pendulum.anchor = { 0.0f,1.0f,0.0f };
-	pendulum.length = 0.8f;
-	pendulum.angle = 0.7f;
-	pendulum.angularVelocity = 0.0f;
-	pendulum.angularAcceleration = 0.0f;
+	ConicalPendulum conicalPendulum{};
+	conicalPendulum.anchor = { 0.0f,1.0f,0.0f };
+	conicalPendulum.length = 0.8f;
+	conicalPendulum.halfApexAngle = 0.7f;
+	conicalPendulum.angle = 0.0f;
+	conicalPendulum.angularVelocity = 0.0f;
 
 	Vector3 p{};
-	p.x = pendulum.anchor.x + std::sin(pendulum.angle) * pendulum.length;
-	p.y = pendulum.anchor.y - std::cos(pendulum.angle) * pendulum.length;
-	p.z = pendulum.anchor.z;
+
+	float radius = std::sin(conicalPendulum.halfApexAngle) * conicalPendulum.length;
+	float height = std::cos(conicalPendulum.halfApexAngle) * conicalPendulum.length;
+
+	p.x = conicalPendulum.anchor.x + std::cos(conicalPendulum.angle) * radius;
+	p.y = conicalPendulum.anchor.y - height;
+	p.z = conicalPendulum.anchor.z - std::sin(conicalPendulum.angle) * radius;
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -80,13 +84,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		camera->Update(keys);
 		if (isStart) {
-			pendulum.angularAcceleration = -(9.8f / pendulum.length) * std::sin(pendulum.angle);
-			pendulum.angularVelocity += pendulum.angularAcceleration * deltaTime;
-			pendulum.angle += pendulum.angularVelocity * deltaTime;
+			conicalPendulum.angularVelocity = std::sqrt(9.8f / (conicalPendulum.length * std::cos(conicalPendulum.halfApexAngle)));
+			conicalPendulum.angle += conicalPendulum.angularVelocity * deltaTime;
 
-			p.x = pendulum.anchor.x + std::sin(pendulum.angle) * pendulum.length;
-			p.y = pendulum.anchor.y - std::cos(pendulum.angle) * pendulum.length;
-			p.z = pendulum.anchor.z;
+			radius = std::sin(conicalPendulum.halfApexAngle) * conicalPendulum.length;
+			height = std::cos(conicalPendulum.halfApexAngle) * conicalPendulum.length;
+
+			p.x = conicalPendulum.anchor.x + std::cos(conicalPendulum.angle) * radius;
+			p.y = conicalPendulum.anchor.y - height;
+			p.z = conicalPendulum.anchor.z - std::sin(conicalPendulum.angle) * radius;
 		}
 
 		///
@@ -100,7 +106,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 
 		DrawSphere(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), p, 0.05f, WHITE);
-		DrawLine3D(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), pendulum.anchor, p, WHITE);
+		DrawLine3D(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), conicalPendulum.anchor, p, WHITE);
 		
 		///
 		/// ↑描画処理ここまで
