@@ -1,7 +1,11 @@
 #include "OBBbox.h"
 #include <Novice.h>
 #include <sstream>
+#ifdef _DEBUG
 #include <imgui.h>
+#endif // _DEBUG
+
+
 #include <MatrixCalculations.h>
 
 int32_t OBBbox::obbBoxNum = 0;
