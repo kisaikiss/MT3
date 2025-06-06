@@ -6,15 +6,14 @@
 #include "DrawGrid.h"
 #include "Draw.h"
 
-#include "Spring.h"
-#include "Ball.h"
-#include "SpringClass.h"
+
 
 #include "Arm.h"
 
 #include "Define.h"
 
 #include <memory>
+#include <numbers>
 
 #ifdef _DEBUG
 #include <imgui.h>
@@ -39,21 +38,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	Spring spring{};
-	spring.anchor = { 0.f,0.f,0.f };
-	spring.naturalLength = 1.0f;
-	spring.stiffness = 100.0f;
-	spring.dampingCoefficient = 2.0f;
-
-	Ball ball{};
-	ball.position = { 1.2f,0.0f,0.0f };
-	ball.mass = 2.0f;
-	ball.radius = 0.05f;
-	ball.color = BLUE;
 
 	bool isStart = false;
 
-	std::unique_ptr<SpringClass> springClass = std::make_unique<SpringClass>(&spring, &ball);
+	float deltaTime = 1.0f / 60.0f;
+
+	float angularVelocity = std::numbers::pi_v<float>;
+	float angle = 0.0f;
+	float radius = 0.8f;
+
+	Vector3 p{};
+	p.x = std::cos(angle) * radius;
+	p.y = std::sin(angle) * radius;
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -80,8 +76,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		camera->Update(keys);
 		if (isStart) {
-			springClass->Update();
+			angle += angularVelocity * deltaTime;
+
+			p.x = std::cos(angle) * radius;
+			p.y = std::sin(angle) * radius;
 		}
+
+		
 		
 
 		///
@@ -93,7 +94,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		springClass->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+
+		DrawSphere(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), p, 0.05f, WHITE);
 		
 		///
 		/// ↑描画処理ここまで
