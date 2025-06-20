@@ -129,7 +129,7 @@
       <Filter>KamataEngine</Filter>
     </ClCompile>
     <ClCompile Include="SpringClass.cpp">
-      <Filter>KamataEngine</Filter>
+      <Filter>Spring</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,9 +217,6 @@
       <Filter>Camera</Filter>
     </ClInclude>
     <ClInclude Include="DrawGrid.h" />
-    <ClInclude Include="Shape.h">
-      <Filter>Line</Filter>
-    </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Sphere</Filter>
     </ClInclude>
@@ -259,7 +256,14 @@
       <Filter>Spring</Filter>
     </ClInclude>
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="SpringClass.h" />
+    <ClInclude Include="ConicalPendulum.h" />
+    <ClInclude Include="Pendulum.h" />
+    <ClInclude Include="Shape.h">
+      <Filter>Line</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringClass.h">
+      <Filter>Spring</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MT3.rc" />

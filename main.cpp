@@ -1,14 +1,16 @@
 #include <Novice.h>
 #include "Vector3Calculations.h"
+#include "Vector3Operator.h"
 #include "Matrix4x4.h"
 #include "MatrixCalculations.h"
 #include "Camera.h"
 #include "DrawGrid.h"
 #include "Draw.h"
-#include "ConicalPendulum.h"
 
-
-#include "Arm.h"
+#include "Ball.h"
+#include "Sphere.h"
+#include "Plane.h"
+#include "Collision.h"
 
 #include "Define.h"
 
@@ -38,27 +40,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
+	std::shared_ptr<Sphere> sphere = std::make_shared<Sphere>();
+
+	std::shared_ptr<Plane> plane = std::make_shared<Plane>();
+	plane->SetNormal(Normalize({ -0.2f,0.9f,-0.3f }));
+
+
+	Ball ball{};
+	ball.position = { 0.8f,1.2f,0.3f };
+	ball.mass = 2.0f;
+	ball.radius = 0.05f;
+	ball.color = WHITE;
+	ball.acceleration = { 0.0f,-9.8f,0.0f };
+
+	sphere->SetRadius(ball.radius);
+	sphere->SetPos(ball.position);
+
+	//反発係数
+	float e = 0.5f;
 
 	bool isStart = false;
 
 	float deltaTime = 1.0f / 60.0f;
-
-	ConicalPendulum conicalPendulum{};
-	conicalPendulum.anchor = { 0.0f,1.0f,0.0f };
-	conicalPendulum.length = 0.8f;
-	conicalPendulum.halfApexAngle = 0.7f;
-	conicalPendulum.angle = 0.0f;
-	conicalPendulum.angularVelocity = 0.0f;
-
-	Vector3 p{};
-
-	float radius = std::sin(conicalPendulum.halfApexAngle) * conicalPendulum.length;
-	float height = std::cos(conicalPendulum.halfApexAngle) * conicalPendulum.length;
-
-	p.x = conicalPendulum.anchor.x + std::cos(conicalPendulum.angle) * radius;
-	p.y = conicalPendulum.anchor.y - height;
-	p.z = conicalPendulum.anchor.z - std::sin(conicalPendulum.angle) * radius;
-
+	
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
@@ -80,19 +84,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::End();
 #endif // _DEBUG
 
-
-
 		camera->Update(keys);
+		plane->Update();
 		if (isStart) {
-			conicalPendulum.angularVelocity = std::sqrt(9.8f / (conicalPendulum.length * std::cos(conicalPendulum.halfApexAngle)));
-			conicalPendulum.angle += conicalPendulum.angularVelocity * deltaTime;
-
-			radius = std::sin(conicalPendulum.halfApexAngle) * conicalPendulum.length;
-			height = std::cos(conicalPendulum.halfApexAngle) * conicalPendulum.length;
-
-			p.x = conicalPendulum.anchor.x + std::cos(conicalPendulum.angle) * radius;
-			p.y = conicalPendulum.anchor.y - height;
-			p.z = conicalPendulum.anchor.z - std::sin(conicalPendulum.angle) * radius;
+			ball.velocity = ball.velocity + ball.acceleration * deltaTime;
+			ball.position = ball.position + ball.velocity * deltaTime;
+			sphere->SetRadius(ball.radius);
+			sphere->SetPos(ball.position);
+			if (CheckCollisionPlaneSphere(*sphere.get(), *plane.get())) {
+				Vector3 reflected = Reflect(ball.velocity, plane->GetNormal());
+				Vector3 projectToNormal = Project(reflected, plane->GetNormal());
+				Vector3 movingDirection = reflected - projectToNormal;
+				ball.velocity = projectToNormal * e + movingDirection;
+				
+				// 押し戻し処理
+				Vector3 planePoint = -plane->GetDistance() / Dot(plane->GetNormal(), plane->GetNormal()) * plane->GetNormal();
+				float distance = Dot(ball.position - planePoint, Normalize(plane->GetNormal()));
+				float penetration = ball.radius - distance;
+				if (penetration > 0.0f)
+				{
+					ball.position = ball.position + Normalize(plane->GetNormal()) * penetration;
+				}
+				 
+			}
 		}
 
 		///
@@ -104,9 +118,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-
-		DrawSphere(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), p, 0.05f, WHITE);
-		DrawLine3D(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix(), conicalPendulum.anchor, p, WHITE);
+		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
+		plane->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		
 		///
 		/// ↑描画処理ここまで
