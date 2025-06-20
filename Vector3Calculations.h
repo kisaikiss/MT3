@@ -63,3 +63,11 @@ Vector3 Project(const Vector3& v1, const Vector3& v2);
 Vector3 TransforNormal(const Vector3& vector, const Matrix4x4& matrix);
 
 Vector3 Perpendicular(const Vector3& vector);
+
+/// <summary>
+/// 反射ベクトルを求める関数
+/// </summary>
+/// <param name="input"></param>
+/// <param name="normal"></param>
+/// <returns></returns>
+Vector3 Reflect(const Vector3& input, const Vector3& normal);

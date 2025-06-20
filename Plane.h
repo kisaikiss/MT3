@@ -26,6 +26,8 @@ public:
 	void Update();
 	void Draw(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix) const;
 
+	void SetNormal(const Vector3& normal) { normal_ = normal; }
+
 	Vector3 GetNormal() const { return normal_; }
 	float GetDistance() const { return distance_; }
 

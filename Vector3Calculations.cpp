@@ -1,6 +1,7 @@
 #include "Vector3Calculations.h"
 
 #include "Define.h"
+#include "Vector3Operator.h"
 
 float Dot(Vector3 v1, Vector3 v2) {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
@@ -62,4 +63,9 @@ Vector3 Perpendicular(const Vector3& vector) {
 		return Vector3(-vector.y, vector.x, 0.0f);
 	}
 	return Vector3(0.0f, -vector.z, vector.y);
+}
+
+Vector3 Reflect(const Vector3& input, const Vector3& normal) {
+	Vector3 result = input - 2 * (Dot(input, normal)) * normal;
+	return result;
 }
