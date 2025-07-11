@@ -40,29 +40,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	std::shared_ptr<Sphere> sphere = std::make_shared<Sphere>();
+	Vector3 axis = { 1.0f,1.0f,1.0f };
+	axis = Normalize(axis);
+	float angle = 0.44f;
+	Matrix4x4 rotateMatrix = MakeRotateAxisAngle(axis, angle);
 
-	std::shared_ptr<Plane> plane = std::make_shared<Plane>();
-	plane->SetNormal(Normalize({ -0.2f,0.9f,-0.3f }));
 
-
-	Ball ball{};
-	ball.position = { 0.8f,1.2f,0.3f };
-	ball.mass = 2.0f;
-	ball.radius = 0.05f;
-	ball.color = WHITE;
-	ball.acceleration = { 0.0f,-9.8f,0.0f };
-
-	sphere->SetRadius(ball.radius);
-	sphere->SetPos(ball.position);
-
-	//反発係数
-	float e = 0.5f;
-
-	bool isStart = false;
-
-	float deltaTime = 1.0f / 60.0f;
-	
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
@@ -77,37 +60,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 #ifdef _DEBUG
-		ImGui::Begin("Window");
-		if (ImGui::Button("Start")) {
-			isStart = true;
-		}
-		ImGui::End();
+		
 #endif // _DEBUG
 
 		camera->Update(keys);
-		plane->Update();
-		if (isStart) {
-			ball.velocity = ball.velocity + ball.acceleration * deltaTime;
-			ball.position = ball.position + ball.velocity * deltaTime;
-			sphere->SetRadius(ball.radius);
-			sphere->SetPos(ball.position);
-			if (CheckCollisionPlaneSphere(*sphere.get(), *plane.get())) {
-				Vector3 reflected = Reflect(ball.velocity, plane->GetNormal());
-				Vector3 projectToNormal = Project(reflected, plane->GetNormal());
-				Vector3 movingDirection = reflected - projectToNormal;
-				ball.velocity = projectToNormal * e + movingDirection;
-				
-				// 押し戻し処理
-				Vector3 planePoint = -plane->GetDistance() / Dot(plane->GetNormal(), plane->GetNormal()) * plane->GetNormal();
-				float distance = Dot(ball.position - planePoint, Normalize(plane->GetNormal()));
-				float penetration = ball.radius - distance;
-				if (penetration > 0.0f)
-				{
-					ball.position = ball.position + Normalize(plane->GetNormal()) * penetration;
-				}
-				 
-			}
-		}
+	
 
 		///
 		/// ↑更新処理ここまで
@@ -118,9 +75,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		plane->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		
+		MatrixScreenPrintf(0, 0, rotateMatrix, "rotateMatrix");
+
 		///
 		/// ↑描画処理ここまで
 		///
