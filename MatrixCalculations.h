@@ -74,6 +74,14 @@ Matrix4x4 MakeRotateMatrix(const Vector3& rotate);
 Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle);
 
 /// <summary>
+/// ある方向からある方向への回転
+/// </summary>
+/// <param name="from"></param>
+/// <param name="to"></param>
+/// <returns></returns>
+Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);
+
+/// <summary>
 /// 移動行列を作る
 /// </summary>
 /// <param name="translate"></param>

@@ -1,5 +1,7 @@
 #include "MatrixCalculations.h"
 #include "Matrix4x4Operator.h"
+#include "Vector3Calculations.h"
+#include "Vector3Operator.h"
 #include "Define.h"
 
 #include <Novice.h>
@@ -116,6 +118,47 @@ Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle) {
 
 	result = s + p + c;
 	
+	result.m[3][3] = 1.0f;
+
+	return result;
+}
+
+Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to) {
+	Matrix4x4 result{};
+	Vector3 axis{};
+	if (from == -to) {
+		axis = { from.y, -from.x, 0.f };
+	} else {
+		axis = Cross(from, to);
+	}
+	axis = Normalize(axis);
+
+	float cos = Dot(from, to);
+	float sin = Length(Cross(from, to));
+
+	Matrix4x4 s = cos * MakeIdentity4x4();
+
+	Matrix4x4 p = {
+		{axis.x * axis.x, axis.x * axis.y, axis.x * axis.z, 0.0f,
+		 axis.y * axis.x, axis.y * axis.y, axis.y * axis.z, 0.0f,
+		 axis.z * axis.x, axis.z * axis.y, axis.z * axis.z, 0.0f,
+		 0.0f, 0.0f, 0.0f, 1.0f}
+	};
+
+	p = (MakeIdentity4x4() - s) * p;
+
+	Matrix4x4 axisCloss = {
+		{0.0f, -axis.z, axis.y, 0.0f,
+		 axis.z, 0.0f, -axis.x, 0.0f,
+		 -axis.y, axis.x, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f}
+	};
+
+
+	Matrix4x4 c = -(sin * MakeIdentity4x4()) * axisCloss;
+
+	result = s + p + c;
+
 	result.m[3][3] = 1.0f;
 
 	return result;
