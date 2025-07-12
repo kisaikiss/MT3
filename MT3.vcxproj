@@ -130,6 +130,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="OBBbox.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="QuaternionCalculations.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Sphere.cpp" />

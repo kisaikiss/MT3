@@ -42,15 +42,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	Quaternion q1 = { 2.0f, 3.0f, 4.0f, 1.0f };
-	Quaternion q2 = { 1.0f, 3.0f, 5.0f, 2.0f };
-	Quaternion identity = IdentityQuaternion();
-	Quaternion conj = Conjugate(q1);
-	Quaternion inv = Inverse(q1);
-	Quaternion normal = Normalize(q1);
-	Quaternion mul1 = Multiply(q1, q2);
-	Quaternion mul2 = Multiply(q2, q1);
-	float norm = Norm(q1);
+	Quaternion rotation = MakeRotateAxisAngleQuaternion(
+		Normalize(Vector3{ 1.0f, 0.4f, -0.2f }), 0.45f);
+	Vector3 pointY = { 2.1f, -0.9f, 1.3f };
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(rotation);
+	Vector3 rotateByQuaternion = RotateVector(pointY, rotation);
+	Vector3 rotateByMatrix = Transform(pointY, rotateMatrix);
+
 
 
 
@@ -83,13 +81,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		QuaternionScreenPrintf(0, 0, identity, "Identity");
-		QuaternionScreenPrintf(0, Define::kRowHeight, conj, "Conjugate");
-		QuaternionScreenPrintf(0, Define::kRowHeight*2, inv, "Inverse");
-		QuaternionScreenPrintf(0, Define::kRowHeight * 3, normal, "Normalize");
-		QuaternionScreenPrintf(0, Define::kRowHeight * 4, mul1, "Mul1");
-		QuaternionScreenPrintf(0, Define::kRowHeight * 5, mul2, "Mul2");
-		Novice::ScreenPrintf(0, Define::kRowHeight * 6, "%f : Norm", norm);
+		QuaternionScreenPrintf(0, Define::kRowHeight, rotation, "rotation");
+		MatrixScreenPrintf(0, Define::kRowHeight * 2, rotateMatrix, "rotateMatrix");
+		VectorScreenPrintf(0, Define::kRowHeight * 7, rotateByQuaternion, "rotateByQuaternion");
+		VectorScreenPrintf(0, Define::kRowHeight * 8, rotateByMatrix, "rotateByMatrix");
 		///
 		/// ↑描画処理ここまで
 		///

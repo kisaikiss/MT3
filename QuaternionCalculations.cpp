@@ -1,5 +1,9 @@
 #include "QuaternionCalculations.h"
 #include "Define.h"
+#include "Vector3.h"
+#include "Vector3Operator.h"
+#include "Vector3Calculations.h"
+#include "Matrix4x4.h"
 #include "Novice.h"
 #include "cmath"
 #include <cassert>
@@ -41,6 +45,58 @@ Quaternion Inverse(const Quaternion& q) {
 	
 	return Quaternion(conjugate.x / squaredNorm, conjugate.y / squaredNorm, conjugate.z / squaredNorm, conjugate.w / squaredNorm);
 }
+
+Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle) {
+	Vector3 n = Normalize(axis);
+	Quaternion result{};
+	result.w = std::cos(angle / 2.0f);
+	result.x = n.x * std::sin(angle / 2.0f);
+	result.y = n.y * std::sin(angle / 2.0f);
+	result.z = n.z * std::sin(angle / 2.0f);
+
+	result = Normalize(result);
+
+	return result;
+}
+
+Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion) {
+	Quaternion r{};
+	r.x = vector.x;
+	r.y = vector.y;
+	r.z = vector.z;
+
+	Quaternion q = Normalize(quaternion);
+
+	Quaternion result = q * r * Conjugate(q);
+
+	return Vector3(result.x, result.y, result.z);
+}
+
+Matrix4x4 MakeRotateMatrix(const Quaternion& quaternion) {
+	Quaternion q = Normalize(quaternion);
+
+	float xx = q.x * q.x;
+	float yy = q.y * q.y;
+	float zz = q.z * q.z;
+	float ww = q.w * q.w;
+	float xy = q.x * q.y;
+	float xz = q.x * q.z;
+	float yz = q.y * q.z;
+	float wx = q.w * q.x;
+	float wy = q.w * q.y;
+	float wz = q.w * q.z;
+
+
+	Matrix4x4 result = {
+		{ww + xx - yy - zz, 2.0f * (xy + wz), 2.0f * (xz - wy),0.0f,
+		 2.0f * (xy - wz), ww - xx + yy - zz, 2.0f * (yz + wx), 0.0f,
+		 2.0f * (xz + wy), 2.0f * (yz - wx),ww - xx - yy + zz,0.0f,
+		0.0f,0.0f,0.0f,1.0f}
+	};
+	
+	return result;
+}
+
 
 void QuaternionScreenPrintf(int x, int y, const Quaternion& quaternion, const char* label) {
 	Novice::ScreenPrintf(x, y, "%.02f", quaternion.x);
