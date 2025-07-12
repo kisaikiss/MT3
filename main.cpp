@@ -6,6 +6,8 @@
 #include "Camera.h"
 #include "DrawGrid.h"
 #include "Draw.h"
+#include "Quaternion.h"
+#include "QuaternionCalculations.h"
 
 #include "Ball.h"
 #include "Sphere.h"
@@ -40,14 +42,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	Vector3 from0 = Normalize(Vector3{ 1.0f, 0.7f, 0.5f });
-	Vector3 to0 = -from0;
-	Vector3 from1 = Normalize(Vector3{ -0.6f, 0.9f, 0.2f });
-	Vector3 to1 = Normalize(Vector3{ 0.4f, 0.7f, -0.5f });
-	Matrix4x4 rotateMatrix0 = DirectionToDirection(
-		Normalize(Vector3{ 1.0f, 0.0f, 0.0f }), Normalize(Vector3{ -1.0f, 0.0f, 0.0f }));
-	Matrix4x4 rotateMatrix1 = DirectionToDirection(from0, to0);
-	Matrix4x4 rotateMatrix2 = DirectionToDirection(from1, to1);
+	Quaternion q1 = { 2.0f, 3.0f, 4.0f, 1.0f };
+	Quaternion q2 = { 1.0f, 3.0f, 5.0f, 2.0f };
+	Quaternion identity = IdentityQuaternion();
+	Quaternion conj = Conjugate(q1);
+	Quaternion inv = Inverse(q1);
+	Quaternion normal = Normalize(q1);
+	Quaternion mul1 = Multiply(q1, q2);
+	Quaternion mul2 = Multiply(q2, q1);
+	float norm = Norm(q1);
 
 
 
@@ -65,11 +68,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 #ifdef _DEBUG
-		
+
 #endif // _DEBUG
 
 		camera->Update(keys);
-	
+
 
 		///
 		/// ↑更新処理ここまで
@@ -80,10 +83,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		MatrixScreenPrintf(0, 0, rotateMatrix0, "rotateMatrix0");
-		MatrixScreenPrintf(0, Define::kRowHeight * 5, rotateMatrix1, "rotateMatrix1");
-		MatrixScreenPrintf(0, Define::kRowHeight * 10, rotateMatrix2, "rotateMatrix2");
-
+		QuaternionScreenPrintf(0, 0, identity, "Identity");
+		QuaternionScreenPrintf(0, Define::kRowHeight, conj, "Conjugate");
+		QuaternionScreenPrintf(0, Define::kRowHeight*2, inv, "Inverse");
+		QuaternionScreenPrintf(0, Define::kRowHeight * 3, normal, "Normalize");
+		QuaternionScreenPrintf(0, Define::kRowHeight * 4, mul1, "Mul1");
+		QuaternionScreenPrintf(0, Define::kRowHeight * 5, mul2, "Mul2");
+		Novice::ScreenPrintf(0, Define::kRowHeight * 6, "%f : Norm", norm);
 		///
 		/// ↑描画処理ここまで
 		///
