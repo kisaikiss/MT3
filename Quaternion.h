@@ -6,4 +6,12 @@ struct Quaternion {
 	float w;
 };
 
+Quaternion operator+(const Quaternion& q1, const Quaternion& q2);
+
+Quaternion operator-(const Quaternion& q);
+
 Quaternion operator*(const Quaternion& q1, const Quaternion& q2);
+
+Quaternion operator*(const Quaternion& q, float s);
+
+Quaternion operator*(float s, const Quaternion& q);

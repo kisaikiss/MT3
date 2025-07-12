@@ -26,6 +26,10 @@ Quaternion Multiply(const Quaternion& q1, const Quaternion& q2) {
 	return result;
 }
 
+float Dot(const Quaternion& q1, const Quaternion& q2) {
+	return q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w;
+}
+
 Quaternion Normalize(const Quaternion& q) {
 	float norm = Norm(q);
 	assert(norm != 0);
@@ -95,6 +99,21 @@ Matrix4x4 MakeRotateMatrix(const Quaternion& quaternion) {
 	};
 	
 	return result;
+}
+
+Quaternion Slerp( Quaternion q0,  Quaternion q1, float t) {
+	float dot = Dot(q0, q1);
+	if (dot < 0) {
+		q0 = -q0;
+		dot = -dot;
+	}
+
+	float theta = std::acos(dot);
+
+	float scale0 = std::sin((1 - t) * theta) / std::sin(theta);
+	float scale1 = std::sin(t * theta) / std::sin(theta);
+
+	return scale0 * q0 + scale1 * q1;
 }
 
 
