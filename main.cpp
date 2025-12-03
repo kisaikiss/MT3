@@ -6,6 +6,8 @@
 #include "Camera.h"
 #include "DrawGrid.h"
 #include "Draw.h"
+#include "Quaternion.h"
+#include "QuaternionCalculations.h"
 
 #include "Ball.h"
 #include "Sphere.h"
@@ -40,29 +42,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	std::shared_ptr<Camera> camera;
 	camera = std::make_shared<Camera>();
 
-	std::shared_ptr<Sphere> sphere = std::make_shared<Sphere>();
+	Quaternion rotation0 = MakeRotateAxisAngleQuaternion({ 0.71f, 0.71f, 0.0f }, 0.3f);
+	Quaternion rotation1 = MakeRotateAxisAngleQuaternion({ 0.71f, 0.0f, 0.71f }, 3.141592f);
 
-	std::shared_ptr<Plane> plane = std::make_shared<Plane>();
-	plane->SetNormal(Normalize({ -0.2f,0.9f,-0.3f }));
+	Quaternion interpolate0 = Slerp(rotation0, rotation1, 0.0f);
+	Quaternion interpolate1 = Slerp(rotation0, rotation1, 0.3f);
+	Quaternion interpolate2 = Slerp(rotation0, rotation1, 0.5f);
+	Quaternion interpolate3 = Slerp(rotation0, rotation1, 0.7f);
+	Quaternion interpolate4 = Slerp(rotation0, rotation1, 1.0f);
 
-
-	Ball ball{};
-	ball.position = { 0.8f,1.2f,0.3f };
-	ball.mass = 2.0f;
-	ball.radius = 0.05f;
-	ball.color = WHITE;
-	ball.acceleration = { 0.0f,-9.8f,0.0f };
-
-	sphere->SetRadius(ball.radius);
-	sphere->SetPos(ball.position);
-
-	//反発係数
-	float e = 0.5f;
-
-	bool isStart = false;
-
-	float deltaTime = 1.0f / 60.0f;
-	
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
@@ -77,37 +65,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 #ifdef _DEBUG
-		ImGui::Begin("Window");
-		if (ImGui::Button("Start")) {
-			isStart = true;
-		}
-		ImGui::End();
+
 #endif // _DEBUG
 
 		camera->Update(keys);
-		plane->Update();
-		if (isStart) {
-			ball.velocity = ball.velocity + ball.acceleration * deltaTime;
-			ball.position = ball.position + ball.velocity * deltaTime;
-			sphere->SetRadius(ball.radius);
-			sphere->SetPos(ball.position);
-			if (CheckCollisionPlaneSphere(*sphere.get(), *plane.get())) {
-				Vector3 reflected = Reflect(ball.velocity, plane->GetNormal());
-				Vector3 projectToNormal = Project(reflected, plane->GetNormal());
-				Vector3 movingDirection = reflected - projectToNormal;
-				ball.velocity = projectToNormal * e + movingDirection;
-				
-				// 押し戻し処理
-				Vector3 planePoint = -plane->GetDistance() / Dot(plane->GetNormal(), plane->GetNormal()) * plane->GetNormal();
-				float distance = Dot(ball.position - planePoint, Normalize(plane->GetNormal()));
-				float penetration = ball.radius - distance;
-				if (penetration > 0.0f)
-				{
-					ball.position = ball.position + Normalize(plane->GetNormal()) * penetration;
-				}
-				 
-			}
-		}
+
 
 		///
 		/// ↑更新処理ここまで
@@ -118,9 +80,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		sphere->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		plane->Draw(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
-		
+		QuaternionScreenPrintf(0, Define::kRowHeight, interpolate0, "interpolate0, Slerp(q0, q1, 0.0f)");
+		QuaternionScreenPrintf(0, Define::kRowHeight * 2, interpolate1, "interpolate1, Slerp(q0, q1, 0.3f)");
+		QuaternionScreenPrintf(0, Define::kRowHeight * 3, interpolate2, "interpolate2, Slerp(q0, q1, 0.5f)");
+		QuaternionScreenPrintf(0, Define::kRowHeight * 4, interpolate3, "interpolate3, Slerp(q0, q1, 0.7f)");
+		QuaternionScreenPrintf(0, Define::kRowHeight * 5, interpolate4, "interpolate4, Slerp(q0, q1, 1.0f)");
+
+
+
 		///
 		/// ↑描画処理ここまで
 		///

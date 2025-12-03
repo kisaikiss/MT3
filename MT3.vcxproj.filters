@@ -131,6 +131,12 @@
     <ClCompile Include="SpringClass.cpp">
       <Filter>Spring</Filter>
     </ClCompile>
+    <ClCompile Include="QuaternionCalculations.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -263,6 +269,12 @@
     </ClInclude>
     <ClInclude Include="SpringClass.h">
       <Filter>Spring</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="QuaternionCalculations.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

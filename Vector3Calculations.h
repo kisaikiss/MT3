@@ -5,6 +5,8 @@
 #include <Novice.h>
 #include <Matrix4x4.h>
 
+struct Quaternion;
+
 /// <summary>
 /// ベクトルの内積
 /// </summary>

@@ -29,7 +29,7 @@ Camera::Camera() {
 void Camera::Update(char keys[256]) {
 #ifdef _DEBUG
 	ImGui::Begin("camera");
-	ImGui::SetWindowPos({ 20.f, 20.f });
+
 	ImGui::DragFloat3("position", &pos_.x, 0.01f);
 	ImGui::DragFloat3("rotate", &rotate_.x, 0.01f);
 	ImGui::End();
