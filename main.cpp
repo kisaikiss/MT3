@@ -23,7 +23,7 @@
 #include <Collision.h>
 
 
-const char kWindowTitle[] = "LE2A_04_コバヤシ_マサト_タイトル";
+const char kWindowTitle[] = "LE2A_06_コバヤシ_マサト_タイトル";
 
 
 
@@ -36,9 +36,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = { 0 };
 	char preKeys[256] = { 0 };
-
-	std::shared_ptr<Camera> camera;
-	camera = std::make_shared<Camera>();
 
 	Vector3 axis = { 1.0f,1.0f,1.0f };
 	axis = Normalize(axis);
@@ -59,12 +56,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
-#ifdef _DEBUG
-		
-#endif // _DEBUG
-
-		camera->Update(keys);
-	
 
 		///
 		/// ↑更新処理ここまで
@@ -74,7 +65,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		MatrixScreenPrintf(0, 0, rotateMatrix, "rotateMatrix");
 
 		///
