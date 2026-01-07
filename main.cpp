@@ -25,7 +25,7 @@
 #include <Collision.h>
 
 
-const char kWindowTitle[] = "LE2A_04_コバヤシ_マサト_タイトル";
+const char kWindowTitle[] = "LE2A_06_コバヤシ_マサト_タイトル";
 
 
 
@@ -39,8 +39,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = { 0 };
 	char preKeys[256] = { 0 };
 
-	std::shared_ptr<Camera> camera;
-	camera = std::make_shared<Camera>();
 
 	Quaternion rotation = MakeRotateAxisAngleQuaternion(
 		Normalize(Vector3{ 1.0f, 0.4f, -0.2f }), 0.45f);
@@ -69,8 +67,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #endif // _DEBUG
 
-		camera->Update(keys);
-
 
 		///
 		/// ↑更新処理ここまで
@@ -80,7 +76,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		QuaternionScreenPrintf(0, Define::kRowHeight, rotation, "rotation");
 		MatrixScreenPrintf(0, Define::kRowHeight * 2, rotateMatrix, "rotateMatrix");
 		VectorScreenPrintf(0, Define::kRowHeight * 7, rotateByQuaternion, "rotateByQuaternion");
