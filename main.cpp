@@ -25,7 +25,7 @@
 #include <Collision.h>
 
 
-const char kWindowTitle[] = "LE2A_04_コバヤシ_マサト_タイトル";
+const char kWindowTitle[] = "LE2A_06_コバヤシ_マサト_タイトル";
 
 
 
@@ -38,9 +38,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = { 0 };
 	char preKeys[256] = { 0 };
-
-	std::shared_ptr<Camera> camera;
-	camera = std::make_shared<Camera>();
 
 	Quaternion rotation0 = MakeRotateAxisAngleQuaternion({ 0.71f, 0.71f, 0.0f }, 0.3f);
 	Quaternion rotation1 = MakeRotateAxisAngleQuaternion({ 0.71f, 0.0f, 0.71f }, 3.141592f);
@@ -68,8 +65,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #endif // _DEBUG
 
-		camera->Update(keys);
-
 
 		///
 		/// ↑更新処理ここまで
@@ -79,7 +74,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		QuaternionScreenPrintf(0, Define::kRowHeight, interpolate0, "interpolate0, Slerp(q0, q1, 0.0f)");
 		QuaternionScreenPrintf(0, Define::kRowHeight * 2, interpolate1, "interpolate1, Slerp(q0, q1, 0.3f)");
 		QuaternionScreenPrintf(0, Define::kRowHeight * 3, interpolate2, "interpolate2, Slerp(q0, q1, 0.5f)");
