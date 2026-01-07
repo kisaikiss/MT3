@@ -39,8 +39,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = { 0 };
 	char preKeys[256] = { 0 };
 
-	std::shared_ptr<Camera> camera;
-	camera = std::make_shared<Camera>();
 
 	Quaternion q1 = { 2.0f, 3.0f, 4.0f, 1.0f };
 	Quaternion q2 = { 1.0f, 3.0f, 5.0f, 2.0f };
@@ -71,8 +69,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #endif // _DEBUG
 
-		camera->Update(keys);
-
 
 		///
 		/// ↑更新処理ここまで
@@ -82,7 +78,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		DrawGrid(camera->GetVeiwProjectionMatrix(), camera->GetVeiwportMatrix());
 		QuaternionScreenPrintf(0, 0, identity, "Identity");
 		QuaternionScreenPrintf(0, Define::kRowHeight, conj, "Conjugate");
 		QuaternionScreenPrintf(0, Define::kRowHeight*2, inv, "Inverse");
